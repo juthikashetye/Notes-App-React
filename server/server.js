@@ -33,7 +33,7 @@ app.use(cookieParser());
 config.connection.connect();
 
 app.get("/users/:user_id", function(req, res) {
-  connection.query("SELECT * FROM users WHERE id = ?", [req.params.user_id], function(error, results, fields) {
+  config.connection.query("SELECT * FROM users WHERE id = ?", [req.params.user_id], function(error, results, fields) {
     if (error) throw error;
 
     res.json(results[0]);
@@ -48,7 +48,7 @@ app.post("/signup/:username/:password", function(req, res) {
 
       // res.send(p_hash);
 
-      connection.query("INSERT INTO users (username, password_hash) VALUES (?, ?)", [req.params.username, p_hash], function(error, results, fields) {
+      config.connection.query("INSERT INTO users (username, password_hash) VALUES (?, ?)", [req.params.username, p_hash], function(error, results, fields) {
 
         var what_user_sees = "";
         if (error) {
@@ -66,7 +66,7 @@ app.post("/signup/:username/:password", function(req, res) {
 
 app.post("/login/:username/:password", function(req, res) {
 
-  connection.query("SELECT * FROM users WHERE username = ?", [req.params.username], function(error, results, fields) {
+  config.connection.query("SELECT * FROM users WHERE username = ?", [req.params.username], function(error, results, fields) {
 
     if (error) throw error;
 
@@ -82,7 +82,11 @@ app.post("/login/:username/:password", function(req, res) {
           req.session.user_id = results[0].id;
           req.session.username = results[0].username;
 
-          res.send("You are logged in.");
+          res.json(
+            {msg: "You are logged in.",
+            user_id: results[0].id,
+            username: results[0].username}
+            );
 
         } else {
 
@@ -96,7 +100,7 @@ app.post("/login/:username/:password", function(req, res) {
 // inserts info into notebooks table
 app.post("/add-notebook/:user_id", function(req, res) {
 
-  connection.query("INSERT INTO notebooks (notebook_name, user_id) VALUES (?, ?)", [req.body.notebook_name, req.params.user_id], function(error, results, fields) {
+  config.connection.query("INSERT INTO notebooks (notebook_name, user_id) VALUES (?, ?)", [req.body.notebook_name, req.params.user_id], function(error, results, fields) {
 
       if (error) res.send(error)
       else res.send(results.insertId.toString());
@@ -108,7 +112,7 @@ app.post("/add-notebook/:user_id", function(req, res) {
 // inserts info into notes table
 app.post("/add-notes/:notebook_id", function(req, res) {
 
-  connection.query("INSERT INTO notes (title,ingredients,instructions,image,source,notebook_id) VALUES (?,?,?,?,?,?)",
+  config.connection.query("INSERT INTO notes (title,ingredients,instructions,image,source,notebook_id) VALUES (?,?,?,?,?,?)",
     [req.body.title,req.body.ingredients,req.body.instructions,req.body.image,req.body.source,req.params.notebook_id],
     function(error, results, fields) {
 
@@ -121,7 +125,7 @@ app.post("/add-notes/:notebook_id", function(req, res) {
 // gets all notes for specified notebook
 app.get("/get-notebook-notes/:notebook_id", function(req, res) {
 
-  connection.query("SELECT * FROM notes WHERE notebook_id = ?", [req.params.notebook_id], function(error, results, fields) {
+  config.connection.query("SELECT * FROM notes WHERE notebook_id = ?", [req.params.notebook_id], function(error, results, fields) {
 
     if (error) res.send(error)
     else res.json(results);
@@ -132,15 +136,19 @@ app.get("/get-notebook-notes/:notebook_id", function(req, res) {
 // gets all notes for specified user
 app.get("/get-all-notes/:user_id", function(req, res) {
 
-  var allNotes = `SELECT notes.id,notes.title,notes.ingredients,notes.instructions,notes.image,notes.source 
+  var allNotes = `SELECT notes.id AS Notes_Id,
+                        notes.title,notes.ingredients,
+                        notes.instructions,
+                        notes.image,notes.source,
+                        notebooks.id AS Notebooks_Id,
+                        notebooks.notebook_name 
                   FROM notes
                   LEFT JOIN notebooks 
-                  ON notes.notebook_id = notebooks.id 
-                  LEFT JOIN users 
-                  ON notebooks.user_id = users.id 
-                  WHERE users.id = ?`
+                  ON notes.notebook_id = notebooks.id
+                  WHERE notebooks.user_id = ?
+                  ORDER BY notebooks.notebook_name`
 
-  connection.query(allNotes, [req.params.user_id], function(error, results, fields) {
+  config.connection.query(allNotes, [req.params.user_id], function(error, results, fields) {
 
     if (error) res.send(error)
     else res.json(results);
@@ -157,7 +165,7 @@ app.get("/get-all-notebooks/:user_id", function(req, res) {
                       ON notebooks.user_id = users.id 
                       WHERE users.id = ?`
 
-  connection.query(allNotebooks, [req.params.user_id], function(error, results, fields) {
+  config.connection.query(allNotebooks, [req.params.user_id], function(error, results, fields) {
 
     if (error) res.send(error)
     else res.json(results);
@@ -174,12 +182,18 @@ app.get("/get-session", function(req, res) {
   res.json(user_info);
 });
 
+// app.get('/get-session', function(req, res) {
+//   console.log(req.session.uname)
+//   res.send([req.session.uname, req.session.uid, req.session.tid, req.session.tname, req.session.uscore])
+// });
+
 app.get("/logout", function(req, res) {
   req.session.destroy(function(err) {
     res.send("you are logged out");
   })
 });
 
-app.listen(3000, function() {
-  console.log("listening on 3000");
+var PORT = process.env.PORT || 5000
+app.listen(PORT, function() {
+  console.log(`listening on ${PORT}`);
 });

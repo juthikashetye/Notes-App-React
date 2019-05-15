@@ -3,6 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const handleClick = () => {
+    fetch("/get-all-notebooks/1")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(JSON.stringify(myJson));
+    });
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -20,6 +30,7 @@ function App() {
           </form>
           <button className="btn btn-primary btn-md" id="loginButton">LOGIN</button>
           <button className="btn btn-secondary btn-md" id="signupButton">SIGN-UP</button>
+          <button onClick={handleClick}>Test</button>
         </div>
       </div>
     </div>
