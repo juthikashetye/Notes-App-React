@@ -7,6 +7,7 @@ var bodyParser = require("body-parser");
 var bcrypt = require("bcryptjs");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
+var logger = require("morgan");
 
 // getting the mysql connection from config
 var config = require("./config");
@@ -29,6 +30,17 @@ app.use(session({
 }));
 
 app.use(cookieParser());
+
+// Set the app up with morgan
+app.use(logger("dev"));
+
+//allow the api to be accessed by other apps
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+  next();
+});
 
 config.connection.connect();
 
@@ -57,7 +69,7 @@ app.post("/signup/:username/:password", function(req, res) {
           what_user_sees = "Account successfully created. Login to continue.";
         }
 
-        res.send(what_user_sees);
+        res.json(what_user_sees);
 
       });
     });
@@ -73,7 +85,7 @@ app.post("/login/:username/:password", function(req, res) {
     // res.json(results);
 
     if (results.length == 0) {
-      res.send("Username does not exist.");
+      res.json("Username does not exist.");
     } else {
       bcrypt.compare(req.params.password, results[0].password_hash, function(err, result) {
 
@@ -90,7 +102,7 @@ app.post("/login/:username/:password", function(req, res) {
 
         } else {
 
-          res.send("Username and password does not match.");
+          res.json("Username and password does not match.");
         }
       });
     }
