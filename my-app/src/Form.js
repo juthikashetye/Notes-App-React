@@ -1,6 +1,6 @@
 import React from 'react';
 
-//stateless componeent
+//stateless component
 
 const Form = (props) => (
 	//no constructor, no state property 
