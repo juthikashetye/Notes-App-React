@@ -26,7 +26,9 @@ app.use(session({
   secret: "app",
   cookie: {
     maxAge: 1 * 1000 * 60 * 60 * 24 * 365
-  }
+  },
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(cookieParser());

@@ -24,6 +24,7 @@ const Form = (props) => (
     <button onClick={props.signUpClick} className="btn btn-secondary btn-md" id="signupButton">SIGN-UP</button>
     <button onClick={props.handleClick}>Test</button>
    </div>
+
 );
 
 export default Form;

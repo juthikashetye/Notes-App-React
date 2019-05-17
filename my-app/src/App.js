@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Form from './Form';
 import Main from './Main';
+// Import Materialize
+import M from "materialize-css";
 
 let name;
 let pass;
@@ -15,10 +17,16 @@ class App extends Component {
     this.state = {
       loggedIn : false
     }
-    
   }
   
   componentDidMount() {
+
+    M.AutoInit();
+
+    var options = {};
+
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems, options);
 
     // made for testing what this is
     fetch("/get-all-notebooks/1") //this returns a string
@@ -121,35 +129,21 @@ class App extends Component {
     let activePage = ""
 
     if(this.state.loggedIn === false){
-          activePage = <Form />
+
+          activePage = <Form logInClick={this.logInClick} signUpClick={this.signUpClick} handleClick={this.handleClick} />
+
         }else {
+          
           activePage = <Main />
+
         }
 
     return (
       <div className="App">
         <div className="container center-align">
-          {activePage}
-      {/*<Form />*/}
-          <div className="userLoginSignUp">
-            <div className="row">
-              <div className="input-field col s12 m6 offset-m3">
-                <input id="username" type="text" name="name_input" className="validate" />
-                <label htmlFor="username">Username</label>
-                <span className="helper-text left-align">Required*</span>
-              </div>
-            </div>
-            <div className="row">
-              <div className="input-field col s12 m6 offset-m3">
-                <input id="password" type="password" name="password_input" className="validate" />
-                <label htmlFor="password">Password</label>
-                <span className="helper-text left-align">Required*</span>
-              </div>
-            </div>
-            <button onClick={this.logInClick}className="btn btn-primary btn-md" id="loginButton">LOGIN</button>
-            <button onClick={this.signUpClick} className="btn btn-secondary btn-md" id="signupButton">SIGN-UP</button>
-            <button onClick={this.handleClick}>Test</button>
-          </div>
+
+         {activePage}
+
         </div>
       </div>
     );
