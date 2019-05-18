@@ -4,6 +4,12 @@ import './App.css';
 import M from "materialize-css";
 
 class Main extends Component {
+
+	// constructor(props) {
+ //    super(props);
+
+    
+ //  }
   
 	componentDidMount() {
 
@@ -13,6 +19,16 @@ class Main extends Component {
 
 	    var elems = document.querySelectorAll('select');
 	    M.FormSelect.init(elems, options);
+
+	    this.initializeM = () => {
+
+	      	var options = {};
+
+		    var elems = document.querySelectorAll('select');
+		    M.FormSelect.init(elems, options);
+    	}
+    
+    	document.querySelectorAll('select').onchange = function() {this.initializeM()};
 
 	    // made for testing what this is
 	    fetch("/get-all-notebooks/1") //this returns a string
@@ -28,8 +44,12 @@ class Main extends Component {
 				<h1>Notes App</h1>
 			    <div className="row">
 			      <div className="input-field col s6">
-			        <select id="notebookNotes">
-			          <option value="" disabled={true}>Select a recipe</option>
+			        <select id="notebookNotes" value={this.props.value} onChange={this.props.handleSelectChange}>
+			          <option disabled={true} value="">Select a recipe</option>
+			          <optgroup label="nuts">
+			          <option value="coconut">coconut</option>
+			          <option value="lime">lime</option>
+			          </optgroup>
 			        </select>
 			        <label>Recipe books</label>
 			      </div>

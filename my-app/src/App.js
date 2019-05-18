@@ -15,7 +15,8 @@ class App extends Component {
     super();
 
     this.state = {
-      loggedIn : false
+      loggedIn : false,
+      value: ""
     }
   }
   
@@ -27,6 +28,16 @@ class App extends Component {
 
     var elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, options);
+
+    this.initializeM = () => {
+      var options = {};
+
+      var elems = document.querySelectorAll('select');
+      M.FormSelect.init(elems, options);
+    }
+    
+
+    document.querySelectorAll('select').onchange = function() {this.initializeM()};
 
     // made for testing what this is
     fetch("/get-all-notebooks/1") //this returns a string
@@ -124,6 +135,11 @@ class App extends Component {
       }
   }
 
+  handleSelectChange = (event) => {
+    this.setState({value: event.target.value});
+    // console.log(this.state.value);
+  }
+
   render(){
 
     let activePage = ""
@@ -134,8 +150,9 @@ class App extends Component {
 
         }else {
           
-          activePage = <Main />
-
+          activePage = <Main value={this.state.value} handleSelectChange={this.handleSelectChange}/>
+          // console.log(activePage);
+          console.log(`Selected recipe title: ${this.state.value}`);
         }
 
     return (

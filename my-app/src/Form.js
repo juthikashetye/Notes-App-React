@@ -20,7 +20,7 @@ const Form = (props) => (
         <span className="helper-text left-align">Required*</span>
       </div>
     </div>
-    <button onClick={props.logInClick}className="btn btn-primary btn-md" id="loginButton">LOGIN</button>
+    <button onClick={props.logInClick} className="btn btn-primary btn-md" id="loginButton">LOGIN</button>
     <button onClick={props.signUpClick} className="btn btn-secondary btn-md" id="signupButton">SIGN-UP</button>
     <button onClick={props.handleClick}>Test</button>
    </div>
