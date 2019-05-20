@@ -13,27 +13,6 @@ class Notes extends Component {
   
 	componentDidMount() {
 
-	    // M.AutoInit();
-
-	    // var options = {};
-
-	    // var elems = document.querySelectorAll('select');
-	    // M.FormSelect.init(elems, options);
-
-	    // this.initializeM = () => {
-
-	    //   	var options = {};
-
-		   //  var elems = document.querySelectorAll('select');
-		   //  M.FormSelect.init(elems, options);
-    	// }
-    
-    	// document.querySelectorAll('select').onchange = function() {this.initializeM()};
-
-	    // made for testing what this is
-	    // this.getnotes(this.globalUserId);
-	    // this.getnotes(this.state.globalUserId);
-
 	}
 
 	render(){

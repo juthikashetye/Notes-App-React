@@ -11,7 +11,7 @@ let name;
 let pass;
 let globalUserId;
 // let globalName;
-// let notebookId;
+let notebookId;
 
 class App extends Component {
   constructor() {
@@ -23,30 +23,20 @@ class App extends Component {
       recipeSelected: false,
       notebookArr: [],
       notesArr: [],
-      globalUserId: 0
+      notebookRecipesArr: [],
+      globalUserId: 0,
+      notebookId: "",
+      instructions: "",
+      ingredients: "",
+      imageLink: "",
+      sourceLink: "",
+      n_name: "",
+      nb_name:"" 
     }
   }
   
   componentDidMount() {
 
-    // M.AutoInit();
-
-    // let options = {};
-
-    // let elems = document.querySelectorAll('select');
-    // M.FormSelect.init(elems, options);
-
-    // this.initializeM = () => {
-    //   let options = {};
-
-    //   let elems = document.querySelectorAll('select');
-    //   M.FormSelect.init(elems, options);
-    // }
-    
-
-    // document.querySelectorAll('select').onchange = function() {this.initializeM()};
-
-    // this.getnotes(globalUserId);
     this.getnotes(this.state.globalUserId);
 
   }
@@ -111,10 +101,9 @@ class App extends Component {
   // event handler for signup button
   signUpClick = (event) => {
 
-    // name = event.target.parentElement.children[0].children[0].children[0].value
     name = document.querySelector("#username").value
     console.log(name);   
-    // pass = event.target.parentElement.children[1].children[0].children[0].value
+
     pass = document.querySelector("#password").value
     console.log(pass);
 
@@ -129,10 +118,9 @@ class App extends Component {
   // event handler for login button
   logInClick = (event) => {
 
-    // name = event.target.parentElement.children[0].children[0].children[0].value
     name = document.querySelector("#username").value
     console.log(name);   
-    // pass = event.target.parentElement.children[1].children[0].children[0].value
+
     pass = document.querySelector("#password").value
     console.log(pass);
 
@@ -144,12 +132,76 @@ class App extends Component {
   }
 
   handleSelectChange = (event) => {
+    
+    event.preventDefault();
+    
+    console.log(event.target.value);
+    
+    console.log(event.target.selectedIndex);
+
+    let x = document.getElementById("notebookNotes");
+    let i = x.selectedIndex;
+    notebookId = x.options[i].getAttribute("selectednotebookid");
+    console.log(notebookId);
+
     this.setState({
+      recipeSelected: true,
       value: event.target.value,
-      recipeSelected: true
+      notebookId: notebookId
+     
     });
-    // console.log(this.state.value);
-    // this.getnotes(globalUserId);
+    this.getnotebookNotes(notebookId);
+  }
+
+  getnotebookNotes = (id) => {
+
+    fetch(`/get-notebook-notes/${id}`,{
+      method: 'GET',
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+
+    }).then(recipe => recipe.json())
+      .then(recipe => {
+
+        console.log(recipe);
+        
+        let noteName;
+        let instructions;
+        let ingredients;
+        let imageLink;
+        let sourceLink;
+        let notebookRecipesArr;
+
+        for (let i = 0; i < recipe.length; i++) {
+
+          if (noteName !== recipe[i].title) {
+
+            noteName = recipe[i].title;
+            instructions = recipe[i].instructions;
+            ingredients = recipe[i].ingredients;
+            imageLink = recipe[i].image;
+            sourceLink = recipe[i].source;
+
+            notebookRecipesArr = [...this.state.notebookRecipesArr,
+                                  {noteName, instructions, ingredients, imageLink, sourceLink}];
+            
+          }
+          
+          this.setState({
+              notebookRecipesArr,
+              instructions,
+              ingredients,
+              imageLink,
+              sourceLink 
+            });
+
+        }
+        console.log(notebookRecipesArr);
+        
+
+      });
   }
 
   getnotes = (id) => {
@@ -165,36 +217,29 @@ class App extends Component {
       .then(nt => {
 
         console.log(nt);
-        let notebookName = "";
+
         let nb_id = "";
         let nb_name = "";
         let notesNb_id = "";
         let n_name = "";
         let notebookArr;
         let notesArr;
+        // let instructions;
+        // let ingredients;
+        // let imageLink;
+        // let sourceLink;
 
         for (let i = 0; i < nt.length; i++) {
 
-          // if(notebookName != nt[i].notebook_name) {
-          //   let optGrp = $("<optgroup>")
-          //   .attr("label", nt[i].notebook_name)
-          //   .attr("id", "optGroup" + nt[i].Notebooks_Id)
-          //   notebookName = nt[i].notebook_name;
-          //   $("#notebookNotes").append(optGrp);
-          // }
-
-          // let opt = $("<option>").attr("value", nt[i].title).text(nt[i].title);
-          // $("#optGroup" + nt[i].Notebooks_Id).append(opt);
-
-
-          // $("#notebookNotes").trigger('contentChanged');
-
-          if (notebookName !== nt[i].notebook_name) {
-            notebookName = nt[i].notebook_name;
-            nb_id = nt[i].Notebooks_Id;
+          if (nb_name !== nt[i].notebook_name) {
             nb_name = nt[i].notebook_name;
+            nb_id = nt[i].Notebooks_Id;
             notesNb_id = nt[i].notesNb_Id;
             n_name = nt[i].title;
+            // instructions = nt[i].instructions;
+            // ingredients = nt[i].ingredients;
+            // imageLink = nt[i].image;
+            // sourceLink = nt[i].source;
 
             notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
             notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
@@ -203,14 +248,10 @@ class App extends Component {
           
           this.setState({
               notebookArr,
-              notesArr
+              notesArr,
+              nb_name,
+              n_name
             });
-
-          // document.querySelectorAll('select').trigger('contentChanged');
-          // let event = document.createEvent('HTMLEvents');
-          // let elem = document.querySelectorAll('select');
-          // event.initEvent('change', true, false);
-          // elem.dispatchEvent(event);
 
         }
         console.log(notebookArr);
@@ -233,15 +274,18 @@ class App extends Component {
     }else {
           
       // activePage = <Main value={this.state.value} handleSelectChange={this.handleSelectChange}/>
-      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} handleSelectChange={this.handleSelectChange}/>
+      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange}/>
+
       // console.log(activePage);
+
       console.log(`Selected recipe title: ${this.state.value}`);
+      console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
         }
 
     if (this.state.recipeSelected === true) {
 
       // add values from notes table
-      recipePage = <Notes notesTitle={this.state.value} />
+      recipePage = <Notes notesTitle={this.state.value} ingredients={this.state.ingredients}/>
 
     }
 

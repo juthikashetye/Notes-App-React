@@ -13,25 +13,6 @@ class Main extends Component {
   
 	componentDidMount() {
 
-	    // M.AutoInit();
-
-	    // var options = {};
-
-	    // var elems = document.querySelectorAll('select');
-	    // M.FormSelect.init(elems, options);
-
-	    // this.initializeM = () => {
-
-	    //   	var options = {};
-
-		   //  var elems = document.querySelectorAll('select');
-		   //  M.FormSelect.init(elems, options);
-    	// }
-    
-    	// document.querySelectorAll('select').onchange = function() {this.initializeM()};
-
-	    // made for testing what this is
-	    // getnotes(this.globalUserId);
 	}
 
 	render(){
@@ -50,7 +31,7 @@ class Main extends Component {
 			        </select>
 			        <label>Recipe books</label>*/}
 
-			        <select id="notebookNotes" value={this.props.value} onChange={this.props.handleSelectChange}>
+			        <select id="notebookNotes" value={this.props.value} className={this.props.notebookId} onChange={this.props.handleSelectChange}>
 			        	<option disabled={true} value="">Select a recipe</option>
 
             			{this.props.notebookArr.map((optionGroup,ind) => {
@@ -60,11 +41,13 @@ class Main extends Component {
                         			{this.props.notesArr.map((option,ind) => {
                             			if(option.notesNb_id === optionGroup.nb_id){
 
-                                			return <option key={ind} value={option.n_name}> 
+                                			return <option key={option.notesNb_id} selectednotebookid={option.notesNb_id} value={option.n_name}> 
                                         				{option.n_name}
                                     				</option>
                         				
-                    					}else return null;
+                    					}else {
+                    						return null;
+                    					}
                     				}
                     			)}
                     			</optgroup>

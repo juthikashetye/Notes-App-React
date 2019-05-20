@@ -31,3 +31,5 @@ CREATE TABLE notes (
 	PRIMARY KEY (id)
 );
 
+-- INSERT INTO notes (title, ingredients, instructions, image, source, notebook_id)
+-- VALUES ("Chicken Biryani", "Rice, Water, Masala, Chicken", "Cook chicken and rice with masala", "","",1);
