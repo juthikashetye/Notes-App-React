@@ -154,6 +154,7 @@ app.get("/get-all-notes/:user_id", function(req, res) {
                         notes.title,notes.ingredients,
                         notes.instructions,
                         notes.image,notes.source,
+                        notes.notebook_id AS notesNb_Id,
                         notebooks.id AS Notebooks_Id,
                         notebooks.notebook_name 
                   FROM notes

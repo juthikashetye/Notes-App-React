@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 // Import Materialize
-import M from "materialize-css";
+// import M from "materialize-css";
 
 class Main extends Component {
 
@@ -13,29 +13,25 @@ class Main extends Component {
   
 	componentDidMount() {
 
-	    M.AutoInit();
+	    // M.AutoInit();
 
-	    var options = {};
+	    // var options = {};
 
-	    var elems = document.querySelectorAll('select');
-	    M.FormSelect.init(elems, options);
+	    // var elems = document.querySelectorAll('select');
+	    // M.FormSelect.init(elems, options);
 
-	    this.initializeM = () => {
+	    // this.initializeM = () => {
 
-	      	var options = {};
+	    //   	var options = {};
 
-		    var elems = document.querySelectorAll('select');
-		    M.FormSelect.init(elems, options);
-    	}
+		   //  var elems = document.querySelectorAll('select');
+		   //  M.FormSelect.init(elems, options);
+    	// }
     
-    	document.querySelectorAll('select').onchange = function() {this.initializeM()};
+    	// document.querySelectorAll('select').onchange = function() {this.initializeM()};
 
 	    // made for testing what this is
-	    fetch("/get-all-notebooks/1") //this returns a string
-	        .then(res => res.json()) //we convert that string to json and return it
-	        .then(notebooks => this.setState({notebooks})
-	        ) //then we throw that notebooks json into the state
-
+	    // getnotes(this.globalUserId);
 	}
 
 	render(){
@@ -44,15 +40,40 @@ class Main extends Component {
 				<h1>Notes App</h1>
 			    <div className="row">
 			      <div className="input-field col s6">
-			        <select id="notebookNotes" value={this.props.value} onChange={this.props.handleSelectChange}>
+			      
+			        {/*<select id="notebookNotes" value={this.props.value} onChange={this.props.handleSelectChange}>
 			          <option disabled={true} value="">Select a recipe</option>
 			          <optgroup label="nuts">
 			          <option value="coconut">coconut</option>
 			          <option value="lime">lime</option>
 			          </optgroup>
 			        </select>
-			        <label>Recipe books</label>
+			        <label>Recipe books</label>*/}
+
+			        <select id="notebookNotes" value={this.props.value} onChange={this.props.handleSelectChange}>
+			        	<option disabled={true} value="">Select a recipe</option>
+
+            			{this.props.notebookArr.map((optionGroup,ind) => {
+
+                				return <optgroup key={`${optionGroup.nb_id}key`} label={optionGroup.nb_name}>
+
+                        			{this.props.notesArr.map((option,ind) => {
+                            			if(option.notesNb_id === optionGroup.nb_id){
+
+                                			return <option key={ind} value={option.n_name}> 
+                                        				{option.n_name}
+                                    				</option>
+                        				
+                    					}else return null;
+                    				}
+                    			)}
+                    			</optgroup>
+            				}
+            			)}
+        			</select>
+        			<label>Recipe books</label>
 			      </div>
+
 			      <button className="btn waves-effect waves-light"><i className="material-icons left">add_circle</i>Add a new recipe</button>
 			    </div>
 			</div>
