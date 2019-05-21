@@ -36,12 +36,12 @@ class Main extends Component {
 
             			{this.props.notebookArr.map((optionGroup,ind) => {
 
-                				return <optgroup key={`${optionGroup.nb_id}key`} label={optionGroup.nb_name}>
+                				return <optgroup key={ind} label={optionGroup.nb_name}>
 
                         			{this.props.notesArr.map((option,ind) => {
                             			if(option.notesNb_id === optionGroup.nb_id){
 
-                                			return <option key={option.notesNb_id} selectednotebookid={option.notesNb_id} value={option.n_name}> 
+                                			return <option key={ind} selectednotebookid={option.notesNb_id} value={option.n_name}> 
                                         				{option.n_name}
                                     				</option>
                         				

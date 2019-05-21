@@ -38,6 +38,7 @@ class App extends Component {
   componentDidMount() {
 
     this.getnotes(this.state.globalUserId);
+    this.getnotebookNotes(notebookId);
 
   }
 
@@ -199,7 +200,6 @@ class App extends Component {
 
         }
         console.log(notebookRecipesArr);
-        
 
       });
   }
@@ -222,36 +222,47 @@ class App extends Component {
         let nb_name = "";
         let notesNb_id = "";
         let n_name = "";
-        let notebookArr;
-        let notesArr;
-        // let instructions;
-        // let ingredients;
-        // let imageLink;
-        // let sourceLink;
+        let notebookArr =[...this.state.notebookArr];
+        let notesArr = [...this.state.notesArr];
 
         for (let i = 0; i < nt.length; i++) {
 
           if (nb_name !== nt[i].notebook_name) {
+
             nb_name = nt[i].notebook_name;
             nb_id = nt[i].Notebooks_Id;
-            notesNb_id = nt[i].notesNb_Id;
-            n_name = nt[i].title;
-            // instructions = nt[i].instructions;
-            // ingredients = nt[i].ingredients;
-            // imageLink = nt[i].image;
-            // sourceLink = nt[i].source;
-
-            notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
-            notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+            // notesNb_id = nt[i].notesNb_Id;
+            // n_name = nt[i].title;
             
+            notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
+            // notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+   
           }
-          
+
           this.setState({
-              notebookArr,
-              notesArr,
-              nb_name,
-              n_name
-            });
+            notebookArr,
+            notesArr,
+            nb_name,
+            n_name
+          });
+
+          for (var nIndex = 0; nIndex < notebookArr.length; nIndex++) {
+
+              if (n_name !== nt[i].title) {
+
+                notesNb_id = nt[i].notesNb_Id;
+                n_name = nt[i].title;
+                notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+
+              }
+              this.setState({
+                notebookArr,
+                notesArr,
+                nb_name,
+                n_name
+              });
+              
+            }
 
         }
         console.log(notebookArr);
