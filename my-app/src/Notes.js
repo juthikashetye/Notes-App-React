@@ -7,8 +7,7 @@ class Notes extends Component {
 
 	// constructor(props) {
  //    super(props);
-
-    
+ 
  //  }
   
 	componentDidMount() {
@@ -38,8 +37,8 @@ class Notes extends Component {
 					
 			    })}
 
-			    <button className="btn waves-effect waves-light"><i className="material-icons left">{this.props.icon}</i>{this.props.buttonText}</button>
-			    <button className="btn waves-effect waves-light"><i className="material-icons left">delete</i>Delete</button>
+			    <button className="btn waves-effect waves-light">{this.props.buttonText}</button>
+			    <button className="btn waves-effect waves-light">Delete</button>
 			</div>
 		);
 	}

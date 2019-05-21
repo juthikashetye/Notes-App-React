@@ -8,7 +8,6 @@ class Main extends Component {
 	// constructor(props) {
  //    super(props);
 
-    
  //  }
   
 	componentDidMount() {
@@ -48,7 +47,7 @@ class Main extends Component {
         			<label>Recipe books</label>
 			      </div>
 
-			      <button className="btn waves-effect waves-light"><i className="material-icons left">add_circle</i>Add a new recipe</button>
+			      <button className="btn waves-effect waves-light" onClick={this.props.addNewRecipe}>Add a new recipe</button>
 			    </div>
 			</div>
 		);

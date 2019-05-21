@@ -4,6 +4,7 @@ import './App.css';
 import Form from './Form';
 import Main from './Main';
 import Notes from './Notes';
+import AddNote from './AddNote';
 // Import Materialize
 // import M from "materialize-css";
 
@@ -20,7 +21,9 @@ class App extends Component {
     this.state = {
       loggedIn : false,
       value: "",
+      notebookValue: "",
       recipeSelected: false,
+      addingRecipe: false,
       notebookArr: [],
       notesArr: [],
       notebookRecipesArr: [],
@@ -59,7 +62,7 @@ class App extends Component {
       alert(s);
 
     });
-}
+  }
 
   // returns login msg for user & sets loggedIn to true
   login = (n,p) => {
@@ -88,9 +91,8 @@ class App extends Component {
       }else {
         alert(l);
       }
-    });
-    
-}
+    });  
+  }
 
   // testing function
   handleClick = () => {
@@ -98,7 +100,6 @@ class App extends Component {
     .then(response => response.json())
     .then(myJson => console.log(JSON.stringify(myJson))
     );
-
   }
 
   // event handler for signup button
@@ -114,8 +115,7 @@ class App extends Component {
         alert("Please fill required (*) fields.");
       }else {
         this.signup(name,pass);
-      }
-    
+      } 
   }
 
   // event handler for login button
@@ -134,7 +134,7 @@ class App extends Component {
       }
   }
 
-  // event handler for select tag changes
+  // event handler for select tag changes on main page
   handleSelectChange = (event) => {
     
     event.preventDefault();
@@ -150,12 +150,44 @@ class App extends Component {
 
     this.setState({
       recipeSelected: true,
+      addingRecipe: false,
       value: event.target.value,
       notebookId: notebookId,
       notebookRecipesArr: []
-     
     });
+
     this.getnotebookNotes(notebookId);
+  }
+
+  // event handler for notebook selection on adding new recipe page
+  selectExistingBook = (event) => {
+    
+    event.preventDefault();
+
+    console.log(`Selected existing notebook name: ${event.target.value}`);
+    
+    console.log(event.target.selectedIndex);
+
+    let y = document.getElementById("existingNotebooks");
+    let z = y.selectedIndex;
+    notebookId = y.options[z].getAttribute("class");
+    console.log(notebookId);
+
+    this.setState({
+      notebookValue: event.target.value,
+      notebookId: notebookId   
+    });  
+  }
+
+  // event handler for add new recipe button click
+  addNewRecipe = (event) => {
+
+    event.preventDefault();
+
+    this.setState({
+      recipeSelected: false,
+      addingRecipe: true
+    });
   }
 
   // gets notes for a specific notebook
@@ -270,7 +302,6 @@ class App extends Component {
               });
               
             }
-
         }
         console.log(notebookArr);
         console.log(notesArr);
@@ -278,23 +309,20 @@ class App extends Component {
       });
   }
 
-
   render(){
-
 
     let activePage = ""
     let recipePage = ""
+    let addRecipePage = ""
 
     if(this.state.loggedIn === false){
 
       activePage = <Form logInClick={this.logInClick} signUpClick={this.signUpClick} handleClick={this.handleClick} />
 
-    }else {
-          
-      // activePage = <Main value={this.state.value} handleSelectChange={this.handleSelectChange}/>
-      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange}/>
+    }else if((this.state.loggedIn === true) && (this.state.addingRecipe === false)){
 
-      // console.log(activePage);
+      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe}/>
+
 
       console.log(`Selected recipe title: ${this.state.value}`);
       console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
@@ -305,6 +333,11 @@ class App extends Component {
       // add values from notes table
       recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients}/>
 
+    }else if (this.state.addingRecipe === true) {
+      addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook}/>
+      
+      console.log(`Selected notebook: ${this.state.notebookValue}`);
+      console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);
     }
 
     return (
@@ -313,6 +346,7 @@ class App extends Component {
 
          {activePage}
          {recipePage}
+         {addRecipePage}
 
         </div>
       </div>
