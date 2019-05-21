@@ -21,15 +21,6 @@ class Main extends Component {
 				<h1>Notes App</h1>
 			    <div className="row">
 			      <div className="input-field col s6">
-			      
-			        {/*<select id="notebookNotes" value={this.props.value} onChange={this.props.handleSelectChange}>
-			          <option disabled={true} value="">Select a recipe</option>
-			          <optgroup label="nuts">
-			          <option value="coconut">coconut</option>
-			          <option value="lime">lime</option>
-			          </optgroup>
-			        </select>
-			        <label>Recipe books</label>*/}
 
 			        <select id="notebookNotes" value={this.props.value} className={this.props.notebookId} onChange={this.props.handleSelectChange}>
 			        	<option disabled={true} value="">Select a recipe</option>

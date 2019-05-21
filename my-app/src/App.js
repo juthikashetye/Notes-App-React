@@ -92,6 +92,7 @@ class App extends Component {
     
 }
 
+  // testing function
   handleClick = () => {
     fetch("/get-all-notes/1")
     .then(response => response.json())
@@ -133,6 +134,7 @@ class App extends Component {
       }
   }
 
+  // event handler for select tag changes
   handleSelectChange = (event) => {
     
     event.preventDefault();
@@ -149,12 +151,14 @@ class App extends Component {
     this.setState({
       recipeSelected: true,
       value: event.target.value,
-      notebookId: notebookId
+      notebookId: notebookId,
+      notebookRecipesArr: []
      
     });
     this.getnotebookNotes(notebookId);
   }
 
+  // gets notes for a specific notebook
   getnotebookNotes = (id) => {
 
     fetch(`/get-notebook-notes/${id}`,{
@@ -188,11 +192,9 @@ class App extends Component {
 
             notebookRecipesArr = [...this.state.notebookRecipesArr,
                                   {noteName, instructions, ingredients, imageLink, sourceLink}];
-            
-          }else{
-            notebookRecipesArr = [];
-          }
-          
+
+           } 
+
           this.setState({
               notebookRecipesArr,
               noteName,
@@ -208,6 +210,7 @@ class App extends Component {
       });
   }
 
+  // gets notebook name and note name for active user
   getnotes = (id) => {
 
     fetch(`/get-all-notes/${id}`,{
