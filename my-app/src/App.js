@@ -26,6 +26,7 @@ class App extends Component {
       notebookRecipesArr: [],
       globalUserId: 0,
       notebookId: "",
+      noteName: "",
       instructions: "",
       ingredients: "",
       imageLink: "",
@@ -173,11 +174,11 @@ class App extends Component {
         let ingredients;
         let imageLink;
         let sourceLink;
-        let notebookRecipesArr;
+        let notebookRecipesArr = [...this.state.notebookRecipesArr];
 
         for (let i = 0; i < recipe.length; i++) {
 
-          if (noteName !== recipe[i].title) {
+          if ((noteName !== recipe[i].title)||(!notebookRecipesArr.includes(recipe[i].title))) {
 
             noteName = recipe[i].title;
             instructions = recipe[i].instructions;
@@ -188,10 +189,13 @@ class App extends Component {
             notebookRecipesArr = [...this.state.notebookRecipesArr,
                                   {noteName, instructions, ingredients, imageLink, sourceLink}];
             
+          }else{
+            notebookRecipesArr = [];
           }
           
           this.setState({
               notebookRecipesArr,
+              noteName,
               instructions,
               ingredients,
               imageLink,
@@ -296,7 +300,7 @@ class App extends Component {
     if (this.state.recipeSelected === true) {
 
       // add values from notes table
-      recipePage = <Notes notesTitle={this.state.value} ingredients={this.state.ingredients}/>
+      recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients}/>
 
     }
 
