@@ -13,6 +13,12 @@ let pass;
 let globalUserId;
 // let globalName;
 let notebookId;
+let nb_id = "";
+let nb_name = "";
+let notesNb_id = "";
+let n_name = "";
+let notebookArr ="";
+let notesArr = "";
 
 class App extends Component {
   constructor() {
@@ -190,6 +196,68 @@ class App extends Component {
     });
   }
 
+  // event handler for createNote button click
+  createNote = (event) => {
+
+    let ntbks = document.getElementById("existingNotebooks").value;
+    let newntbks = document.getElementById("newNotebook").value;
+
+    if ((ntbks === "") && (newntbks === "")) {
+      alert("Please select existing notebook from dropdown or create a new notebook.");
+    }else if((ntbks !== "") && (newntbks !== "")){
+      alert("Please fill only one of the fields marked as #");
+    }else {
+
+      if (newntbks) {
+
+        alert("added newnotebook");
+    
+        let ob = newntbks;
+        console.log(ob);
+        // console.log(JSON.stringify(ob));
+
+        fetch(`/add-notebook/${globalUserId}`,{
+          method: 'POST',
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({notebook_name: ob}),
+        })
+        .then(response => response.json())
+        .then(myJson => {
+
+            console.log(myJson)
+
+            nb_id = myJson;
+            nb_name = newntbks;
+
+            notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
+            // notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+
+            this.setState({
+              notebookArr,
+              notesArr,
+              nb_name,
+              n_name
+            })
+            console.log(notebookArr);
+            console.log(notesArr);
+          });
+      }else if (ntbks) {
+        alert("selected existing notebook");
+      }
+    }
+
+    this.setState({
+      notebookArr,
+      notesArr,
+      nb_name,
+      n_name
+    })
+
+  }
+
   // gets notes for a specific notebook
   getnotebookNotes = (id) => {
 
@@ -257,12 +325,8 @@ class App extends Component {
 
         console.log(nt);
 
-        let nb_id = "";
-        let nb_name = "";
-        let notesNb_id = "";
-        let n_name = "";
-        let notebookArr =[...this.state.notebookArr];
-        let notesArr = [...this.state.notesArr];
+        notebookArr =[...this.state.notebookArr];
+        notesArr = [...this.state.notesArr];
 
         for (let i = 0; i < nt.length; i++) {
 
@@ -334,7 +398,7 @@ class App extends Component {
       recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients}/>
 
     }else if (this.state.addingRecipe === true) {
-      addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook}/>
+      addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook} createNote={this.createNote}/>
       
       console.log(`Selected notebook: ${this.state.notebookValue}`);
       console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);

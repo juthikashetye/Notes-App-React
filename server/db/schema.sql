@@ -32,4 +32,4 @@ CREATE TABLE notes (
 );
 
 -- INSERT INTO notes (title, ingredients, instructions, image, source, notebook_id)
--- VALUES ("Chicken Biryani", "Rice, Water, Masala, Chicken", "Cook chicken and rice with masala", "","",1);
+-- VALUES ("Schezwan noodles", "Noodles, Broth, Masala, Veg", "Cook noodles in broth with masala", "","",10);

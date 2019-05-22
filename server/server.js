@@ -158,7 +158,7 @@ app.get("/get-all-notes/:user_id", function(req, res) {
                         notebooks.id AS Notebooks_Id,
                         notebooks.notebook_name 
                   FROM notes
-                  LEFT JOIN notebooks 
+                  RIGHT JOIN notebooks 
                   ON notes.notebook_id = notebooks.id
                   WHERE notebooks.user_id = ?
                   ORDER BY notebooks.notebook_name`

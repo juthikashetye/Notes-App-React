@@ -35,13 +35,11 @@ class AddNote extends Component {
 				<label htmlFor="noteSource">Reference Website link</label><br />
 				<input id="noteSource" type="text" placeholder="URL of website" /><br />
 
-				<label htmlFor="newNotebook">Add recipe in a new notebook</label><br />
-				<input id="newNotebook" type="text" placeholder="New notebook name" /><br />
-				<span> OR </span><br />
+				<h4>Please fill only one of the alternatives below.</h4>
 
-				<label htmlFor="existingNotebooks">Add recipe in existing Notebook</label><br />
+				<label htmlFor="existingNotebooks"># Add recipe in existing Notebook</label><br />
 				<select id="existingNotebooks" value={this.props.notebookValue} className={this.props.notebookId} onChange={this.props.selectExistingBook}>
-			        	<option disabled={true} value="">Select a Notebook</option>
+			        	<option value="">Select a Notebook</option>
 
             			{this.props.notebookArr.map((optionGroup,ind) => {
 
@@ -49,9 +47,15 @@ class AddNote extends Component {
             				}
             			)}
         			</select><br />
+				
+				<span> OR </span><br />
 
-			    <button className="btn waves-effect waves-light">Save</button>
-			    <button className="btn waves-effect waves-light">Cancel</button>
+				<label htmlFor="newNotebook"># Add recipe in a new notebook</label><br />
+				<input id="newNotebook" type="text" placeholder="New notebook name" /><br />
+
+
+			    <button className="btn waves-effect waves-light" id="createNote" onClick={this.props.createNote}>Create Note</button>
+			    <button className="btn waves-effect waves-light" id="cancelNote">Cancel</button>
 			</div>
 		);
 	}
