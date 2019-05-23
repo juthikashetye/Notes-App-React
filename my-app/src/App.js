@@ -220,8 +220,12 @@ class App extends Component {
     let im = document.getElementById("noteImage").value;
     let s = document.getElementById("noteSource").value;
 
-
-    if ((ntbks === "") && (newntbks === "")) {
+    notebookArr = [...this.state.notebookArr];
+    notesArr = [...this.state.notesArr];
+    
+    if ((t === "") || (i === "") || (it === "")) {
+      alert("Please fill all required fields.");
+    }else if ((ntbks === "") && (newntbks === "")) {
       alert("Please select existing notebook from dropdown or create a new notebook.");
     }else if((ntbks !== "") && (newntbks !== "")){
       alert("Please fill only one of the fields marked as #");
@@ -229,61 +233,28 @@ class App extends Component {
 
       if (newntbks) {
 
-        alert("added newnotebook");
-    
-        let ob = newntbks;
-        console.log(ob);
-        // console.log(JSON.stringify(ob));
+            let ob = newntbks;
+            console.log(ob);
+            // console.log(JSON.stringify(ob));
 
-        fetch(`/add-notebook/${globalUserId}`,{
-          method: 'POST',
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({notebook_name: ob}),
-        })
-        .then(response => response.json())
-        .then(myJson => {
-
-            console.log(myJson)
-
-            nb_id = myJson;
-            nb_name = newntbks;
-
-            notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
-            // notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
-
-            this.setState({
-              notebookArr,
-              notesArr,
-              nb_name,
-              n_name
-            })
-            console.log(notebookArr);
-
-            fetch(`/add-notes/${nb_id}`, {
+            fetch(`/add-notebook/${globalUserId}`,{
               method: 'POST',
               headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
               },
-              body: JSON.stringify({
-                title : t,
-                ingredients: i,
-                instructions: it,
-                image: im,
-                source: s
-              })
-            }).then(res => res.json())
-              .then(r => {
-                console.log(r);
+              body: JSON.stringify({notebook_name: ob}),
+            })
+            .then(response => response.json())
+            .then(myJson => {
 
-                notesNb_id = nb_id;
-                n_name = t;
+                console.log(myJson)
 
-                // notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
-                notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+                nb_id = myJson;
+                nb_name = newntbks;
+
+                notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
+                // notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
 
                 this.setState({
                   notebookArr,
@@ -291,14 +262,47 @@ class App extends Component {
                   nb_name,
                   n_name
                 })
+                console.log(notebookArr);
 
-                console.log(notesArr);
+                fetch(`/add-notes/${nb_id}`, {
+                  method: 'POST',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    title : t,
+                    ingredients: i,
+                    instructions: it,
+                    image: im,
+                    source: s
+                  })
+                }).then(res => res.json())
+                  .then(r => {
+                    console.log(r);
 
-              });
+                    notesNb_id = nb_id;
+                    n_name = t;
 
-            });
+                    // notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
+                    notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+
+                    this.setState({
+                      notebookArr,
+                      notesArr,
+                      nb_name,
+                      n_name
+                    })
+
+                    console.log(notesArr);
+
+                  });
+                
+
+                });
+            alert(`Created new notebook ${newntbks} and added ${t} recipe in it successfully.`);
       }else if (ntbks) {
-        alert("selected existing notebook");
+        // alert("selected existing notebook");
 
         fetch(`/add-notes/${notebookId}`, {
               method: 'POST',
@@ -333,17 +337,16 @@ class App extends Component {
                 console.log(notesArr);
 
               });
+        alert(`${t} recipe added to ${ntbks} notebook successfully`);
       }
-    }else {
-      alert("Please fill all required fields.")
     }
 
-    this.setState({
-      notebookArr,
-      notesArr,
-      nb_name,
-      n_name
-    })
+      this.setState({
+        notebookArr,
+        notesArr,
+        nb_name,
+        n_name
+      })
 
   }
 
@@ -397,6 +400,7 @@ class App extends Component {
         console.log(notebookRecipesArr);
 
       });
+
   }
 
   // gets notebook name and note name for active user
