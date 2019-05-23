@@ -222,7 +222,8 @@ class App extends Component {
 
     notebookArr = [...this.state.notebookArr];
     notesArr = [...this.state.notesArr];
-    
+
+
     if ((t === "") || (i === "") || (it === "")) {
       alert("Please fill all required fields.");
     }else if ((ntbks === "") && (newntbks === "")) {
@@ -232,6 +233,15 @@ class App extends Component {
     }else if ((t !== "") && (i !== "") && (it !== "")) {
 
       if (newntbks) {
+
+        const checkNotebookName = obj => obj.nb_name === newntbks;
+        const checkRecipeName = robj => robj.n_name === t;
+
+        if(notebookArr.some(checkNotebookName) === true){
+          alert("Notebook name already exists. Please give another name or select from existing notebooks.")
+        }else if(notesArr.some(checkRecipeName) === true){
+          alert("Recipe name already exists. Please give another name.")
+        }else if ((notebookArr.some(checkNotebookName) === false) && (notesArr.some(checkRecipeName) === false)){
 
             let ob = newntbks;
             console.log(ob);
@@ -296,11 +306,11 @@ class App extends Component {
 
                     console.log(notesArr);
 
-                  });
-                
-
                 });
+                
+            });
             alert(`Created new notebook ${newntbks} and added ${t} recipe in it successfully.`);
+        }      
       }else if (ntbks) {
         // alert("selected existing notebook");
 
