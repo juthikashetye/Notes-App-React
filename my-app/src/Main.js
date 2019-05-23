@@ -17,6 +17,10 @@ class Main extends Component {
 	render(){
 		return (
 			<div>
+				<nav>
+				<button onClick={this.props.logout}>Logout</button>
+				</nav>
+
 				<h1>Notes App</h1>
 			    <div className="row">
 			      <div className="input-field col s6">

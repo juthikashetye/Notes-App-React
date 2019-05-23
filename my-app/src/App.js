@@ -5,6 +5,7 @@ import Form from './Form';
 import Main from './Main';
 import Notes from './Notes';
 import AddNote from './AddNote';
+// import Nav from './Nav';
 // Import Materialize
 // import M from "materialize-css";
 

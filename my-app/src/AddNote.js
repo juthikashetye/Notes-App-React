@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+// import Nav from './Nav';
 // Import Materialize
 // import M from "materialize-css";
 
@@ -18,6 +19,12 @@ class AddNote extends Component {
 		return (
 
 			<div>
+				
+				<nav>
+				<button onClick={this.props.mainPage}>My Recipes</button>
+				<button onClick={this.props.logout}>Logout</button>
+				</nav>
+
 				<h2>Add a New Recipe</h2>
 
 				<label htmlFor="noteHeading">Recipe Name</label>
@@ -57,7 +64,6 @@ class AddNote extends Component {
 
 
 			    <button className="btn waves-effect waves-light" id="createNote" onClick={this.props.createNote}>Create Note</button>
-			    <button className="btn waves-effect waves-light" id="cancelNote">Cancel</button>
 			</div>
 		);
 	}
