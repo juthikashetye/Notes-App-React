@@ -22,8 +22,8 @@ CREATE TABLE notebooks (
 CREATE TABLE notes (
 	id INT NOT NULL AUTO_INCREMENT,
 	title VARCHAR(255) NOT NULL,
-	ingredients VARCHAR(255) NOT NULL,
-	instructions VARCHAR(255) NOT NULL,
+	ingredients TEXT NOT NULL,
+	instructions TEXT NOT NULL,
 	image VARCHAR(255),
 	source VARCHAR(255),
 	notebook_id INT NOT NULL,

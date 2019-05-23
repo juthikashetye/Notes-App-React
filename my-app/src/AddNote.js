@@ -20,24 +20,26 @@ class AddNote extends Component {
 			<div>
 				<h2>Add a New Recipe</h2>
 
-				<label htmlFor="noteHeading">Recipe Name</label><br />
+				<label htmlFor="noteHeading">Recipe Name</label>
 				<input id="noteHeading" type="text" placeholder="Title of new recipe" /><br />
 
-				<label htmlFor="noteIngredients">Ingredients</label><br />
+				<label htmlFor="noteIngredients">Ingredients</label>
 				<textarea id="noteIngredients" rows="4" cols="50" placeholder="Ingredients"></textarea><br />
 				
-				<label htmlFor="noteInstructions">Instructions</label><br />
+				<label htmlFor="noteInstructions">Instructions</label>
 				<textarea id="noteInstructions" rows="4" cols="50" placeholder="Instructions"></textarea><br />
 
-				<label htmlFor="noteImage">Image</label><br />
+				<label htmlFor="noteImage">Image (optional)</label>
 				<input id="noteImage" type="text" placeholder="URL of image" /><br />
+				
 
-				<label htmlFor="noteSource">Reference Website link</label><br />
+				<label htmlFor="noteSource">Reference Website link (optional)</label>
 				<input id="noteSource" type="text" placeholder="URL of website" /><br />
+				
 
 				<h4>Please fill only one of the alternatives below.</h4>
 
-				<label htmlFor="existingNotebooks"># Add recipe in existing Notebook</label><br />
+				<label htmlFor="existingNotebooks"># Add recipe in existing Notebook</label>
 				<select id="existingNotebooks" value={this.props.notebookValue} className={this.props.notebookId} onChange={this.props.selectExistingBook}>
 			        	<option value="">Select a Notebook</option>
 
@@ -50,7 +52,7 @@ class AddNote extends Component {
 				
 				<span> OR </span><br />
 
-				<label htmlFor="newNotebook"># Add recipe in a new notebook</label><br />
+				<label htmlFor="newNotebook"># Add recipe in a new notebook</label>
 				<input id="newNotebook" type="text" placeholder="New notebook name" /><br />
 
 

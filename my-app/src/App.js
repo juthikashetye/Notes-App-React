@@ -34,7 +34,7 @@ class App extends Component {
       notesArr: [],
       notebookRecipesArr: [],
       globalUserId: 0,
-      notebookId: "",
+      notebookId: 0,
       noteName: "",
       instructions: "",
       ingredients: "",
@@ -151,7 +151,7 @@ class App extends Component {
 
     let x = document.getElementById("notebookNotes");
     let i = x.selectedIndex;
-    notebookId = x.options[i].getAttribute("selectednotebookid");
+    notebookId = parseInt(x.options[i].getAttribute("selectednotebookid"));
     console.log(notebookId);
 
     this.setState({
@@ -174,15 +174,27 @@ class App extends Component {
     
     console.log(event.target.selectedIndex);
 
-    let y = document.getElementById("existingNotebooks");
-    let z = y.selectedIndex;
-    notebookId = y.options[z].getAttribute("class");
-    console.log(notebookId);
+    if (event.target.selectedIndex !== 0) {
 
-    this.setState({
-      notebookValue: event.target.value,
-      notebookId: notebookId   
-    });  
+      let y = document.getElementById("existingNotebooks");
+      let z = y.selectedIndex;
+      let classofselect =  y.options[z].getAttribute("class");
+
+      notebookId = parseInt(classofselect);
+      console.log(notebookId);
+
+      this.setState({
+        notebookValue: event.target.value,
+        notebookId: notebookId   
+      });  
+
+    }else {
+      this.setState({
+        notebookValue: event.target.value,
+        notebookId: 0   
+      });  
+    }
+  
   }
 
   // event handler for add new recipe button click
@@ -201,12 +213,18 @@ class App extends Component {
 
     let ntbks = document.getElementById("existingNotebooks").value;
     let newntbks = document.getElementById("newNotebook").value;
+    let t = document.getElementById("noteHeading").value;
+    let i = document.getElementById("noteIngredients").value;
+    let it = document.getElementById("noteInstructions").value;
+    let im = document.getElementById("noteImage").value;
+    let s = document.getElementById("noteSource").value;
+
 
     if ((ntbks === "") && (newntbks === "")) {
       alert("Please select existing notebook from dropdown or create a new notebook.");
     }else if((ntbks !== "") && (newntbks !== "")){
       alert("Please fill only one of the fields marked as #");
-    }else {
+    }else if ((t !== "") && (i !== "") && (it !== "")) {
 
       if (newntbks) {
 
@@ -242,11 +260,81 @@ class App extends Component {
               n_name
             })
             console.log(notebookArr);
-            console.log(notesArr);
-          });
+
+            fetch(`/add-notes/${nb_id}`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                title : t,
+                ingredients: i,
+                instructions: it,
+                image: im,
+                source: s
+              })
+            }).then(res => res.json())
+              .then(r => {
+                console.log(r);
+
+                notesNb_id = nb_id;
+                n_name = t;
+
+                // notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
+                notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+
+                this.setState({
+                  notebookArr,
+                  notesArr,
+                  nb_name,
+                  n_name
+                })
+
+                console.log(notesArr);
+
+              });
+
+            });
       }else if (ntbks) {
         alert("selected existing notebook");
+
+        fetch(`/add-notes/${notebookId}`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                title : t,
+                ingredients: i,
+                instructions: it,
+                image: im,
+                source: s
+              })
+            }).then(res => res.json())
+              .then(r => {
+                console.log(r);
+
+                notesNb_id = notebookId;
+                n_name = t;
+
+                // notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
+                notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+
+                this.setState({
+                  notebookArr,
+                  notesArr,
+                  nb_name,
+                  n_name
+                })
+
+                console.log(notesArr);
+
+              });
       }
+    }else {
+      alert("Please fill all required fields.")
     }
 
     this.setState({
@@ -381,12 +469,11 @@ class App extends Component {
 
     if(this.state.loggedIn === false){
 
-      activePage = <Form logInClick={this.logInClick} signUpClick={this.signUpClick} handleClick={this.handleClick} />
+      activePage = <Form logInClick={this.logInClick} signUpClick={this.signUpClick} />
 
     }else if((this.state.loggedIn === true) && (this.state.addingRecipe === false)){
 
       activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe}/>
-
 
       console.log(`Selected recipe title: ${this.state.value}`);
       console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
