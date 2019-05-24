@@ -223,6 +223,9 @@ class App extends Component {
     notebookArr = [...this.state.notebookArr];
     notesArr = [...this.state.notesArr];
 
+    const checkNotebookName = obj => obj.nb_name === newntbks;
+    const checkRecipeName = robj => robj.n_name === t;
+
 
     if ((t === "") || (i === "") || (it === "")) {
       alert("Please fill all required fields.");
@@ -234,18 +237,16 @@ class App extends Component {
 
       if (newntbks) {
 
-        const checkNotebookName = obj => obj.nb_name === newntbks;
-        const checkRecipeName = robj => robj.n_name === t;
-
-        if(notebookArr.some(checkNotebookName) === true){
-          alert("Notebook name already exists. Please give another name or select from existing notebooks.")
+        if ((notebookArr.some(checkNotebookName) === true) && (notesArr.some(checkRecipeName) === true)) {
+          alert("The recipe and notebook name already exist. Please give some other names.");
+        }else if(notebookArr.some(checkNotebookName) === true){
+          alert("Notebook name already exists. Please give another name or select from existing notebooks.");
         }else if(notesArr.some(checkRecipeName) === true){
-          alert("Recipe name already exists. Please give another name.")
+          alert("Recipe name already exists. Please give another name.");
         }else if ((notebookArr.some(checkNotebookName) === false) && (notesArr.some(checkRecipeName) === false)){
 
             let ob = newntbks;
             console.log(ob);
-            // console.log(JSON.stringify(ob));
 
             fetch(`/add-notebook/${globalUserId}`,{
               method: 'POST',
@@ -264,7 +265,6 @@ class App extends Component {
                 nb_name = newntbks;
 
                 notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
-                // notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
 
                 this.setState({
                   notebookArr,
@@ -294,7 +294,6 @@ class App extends Component {
                     notesNb_id = nb_id;
                     n_name = t;
 
-                    // notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
                     notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
 
                     this.setState({
@@ -305,16 +304,15 @@ class App extends Component {
                     })
 
                     console.log(notesArr);
-
-                });
-                
+                });    
             });
             alert(`Created new notebook ${newntbks} and added ${t} recipe in it successfully.`);
         }      
       }else if (ntbks) {
-        // alert("selected existing notebook");
-
-        fetch(`/add-notes/${notebookId}`, {
+        if ((notesArr.some(checkRecipeName) === true)) {
+          alert("Recipe name already exists. Please give another name.");
+        }else {
+          fetch(`/add-notes/${notebookId}`, {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -334,7 +332,6 @@ class App extends Component {
                 notesNb_id = notebookId;
                 n_name = t;
 
-                // notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
                 notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
 
                 this.setState({
@@ -343,14 +340,12 @@ class App extends Component {
                   nb_name,
                   n_name
                 })
-
                 console.log(notesArr);
-
               });
-        alert(`${t} recipe added to ${ntbks} notebook successfully`);
+              alert(`${t} recipe added to ${ntbks} notebook successfully`);
+        } 
       }
     }
-
       this.setState({
         notebookArr,
         notesArr,
