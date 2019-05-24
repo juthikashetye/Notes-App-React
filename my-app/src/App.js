@@ -101,6 +101,42 @@ class App extends Component {
     });  
   }
 
+  logout = () => {
+
+    fetch("/logout",{ 
+    method: 'GET',
+    headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+    }).then(l => l.json())
+      .then(l => {
+
+      console.log(l);
+      this.setState ({
+        loggedIn : false,
+        value: "",
+        notebookValue: "",
+        recipeSelected: false,
+        addingRecipe: false,
+        notebookArr: [],
+        notesArr: [],
+        notebookRecipesArr: [],
+        globalUserId: 0,
+        notebookId: 0,
+        noteName: "",
+        instructions: "",
+        ingredients: "",
+        imageLink: "",
+        sourceLink: "",
+        n_name: "",
+        nb_name:"" 
+      });
+      console.log(this.state.loggedIn);
+
+    });
+  }
+
   // testing function
   handleClick = () => {
     fetch("/get-all-notes/1")
@@ -483,7 +519,7 @@ class App extends Component {
 
     }else if((this.state.loggedIn === true) && (this.state.addingRecipe === false)){
 
-      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe}/>
+      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe} logout={this.logout}/>
 
       console.log(`Selected recipe title: ${this.state.value}`);
       console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);

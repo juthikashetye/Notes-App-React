@@ -204,7 +204,7 @@ app.get("/get-session", function(req, res) {
 
 app.get("/logout", function(req, res) {
   req.session.destroy(function(err) {
-    res.send("you are logged out");
+    res.json("you are logged out");
   })
 });
 
