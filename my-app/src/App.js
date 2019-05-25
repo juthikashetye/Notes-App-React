@@ -14,6 +14,7 @@ let pass;
 let globalUserId;
 // let globalName;
 let notebookId;
+let noteId;
 let nb_id = "";
 let nb_name = "";
 let notesNb_id = "";
@@ -36,13 +37,15 @@ class App extends Component {
       notebookRecipesArr: [],
       globalUserId: 0,
       notebookId: 0,
+      noteId: 0,
       noteName: "",
       instructions: "",
       ingredients: "",
       imageLink: "",
       sourceLink: "",
       n_name: "",
-      nb_name:"" 
+      nb_name:"" ,
+      edit: false
     }
   }
   
@@ -335,16 +338,18 @@ class App extends Component {
                   .then(r => {
                     console.log(r);
 
+                    noteId = r;
                     notesNb_id = nb_id;
                     n_name = t;
 
-                    notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+                    notesArr = [...this.state.notesArr, {noteId, notesNb_id, n_name}];
 
                     this.setState({
                       notebookArr,
                       notesArr,
                       nb_name,
-                      n_name
+                      n_name,
+                      noteId
                     })
 
                     console.log(notesArr);
@@ -378,19 +383,21 @@ class App extends Component {
                 source: s
               })
             }).then(res => res.json())
-              .then(r => {
-                console.log(r);
+              .then(newNoteId => {
+                console.log(newNoteId);
 
+                noteId = newNoteId;
                 notesNb_id = notebookId;
                 n_name = t;
 
-                notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+                notesArr = [...this.state.notesArr, {noteId, notesNb_id, n_name}];
 
                 this.setState({
                   notebookArr,
                   notesArr,
                   nb_name,
-                  n_name
+                  n_name,
+                  noteId
                 })
                 console.log(notesArr);
               });
@@ -428,8 +435,7 @@ class App extends Component {
     }).then(recipe => recipe.json())
       .then(recipe => {
 
-        // console.log(recipe);
-        
+        console.log(recipe);
         let noteName;
         let instructions;
         let ingredients;
@@ -441,6 +447,7 @@ class App extends Component {
 
           if ((noteName !== recipe[i].title)||(!notebookRecipesArr.includes(recipe[i].title))) {
 
+            noteId = recipe[i].id;
             noteName = recipe[i].title;
             instructions = recipe[i].instructions;
             ingredients = recipe[i].ingredients;
@@ -448,12 +455,13 @@ class App extends Component {
             sourceLink = recipe[i].source;
 
             notebookRecipesArr = [...this.state.notebookRecipesArr,
-                                  {noteName, instructions, ingredients, imageLink, sourceLink}];
+                                  {noteId, noteName, instructions, ingredients, imageLink, sourceLink}];
 
            } 
 
           this.setState({
               notebookRecipesArr,
+              noteId,
               noteName,
               instructions,
               ingredients,
@@ -496,7 +504,7 @@ class App extends Component {
             // n_name = nt[i].title;
             
             notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
-            // notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+            // notesArr = [...this.state.notesArr, {noteId, notesNb_id, n_name}];
    
           }
 
@@ -513,14 +521,16 @@ class App extends Component {
 
                 notesNb_id = nt[i].notesNb_Id;
                 n_name = nt[i].title;
-                notesArr = [...this.state.notesArr, {notesNb_id, n_name}];
+                noteId = nt[i].Notes_Id;
+                notesArr = [...this.state.notesArr, {noteId, notesNb_id, n_name}];
 
               }
               this.setState({
                 notebookArr,
                 notesArr,
                 nb_name,
-                n_name
+                n_name,
+                noteId
               });
               
             }
@@ -550,9 +560,14 @@ class App extends Component {
         }
 
     if (this.state.recipeSelected === true) {
-
-      // add values from notes table
-      recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients}/>
+      if (this.state.edit === false) {
+        // add values from notes table
+        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients} action={this.editNote} buttonText="Edit"/>
+      }else if (this.state.edit === true) {
+        // add values from notes table
+        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients} action={this.saveNote} buttonText="Save"/>
+      }
+      
 
     }else if (this.state.addingRecipe === true) {
       addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook} createNote={this.createNote} myRecipes={this.myRecipes} logout={this.logout}/>

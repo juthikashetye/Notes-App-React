@@ -39,8 +39,8 @@ class Notes extends Component {
 					
 			    })}
 
-			    <button className="btn waves-effect waves-light">{this.props.buttonText}</button>
-			    <button className="btn waves-effect waves-light">Delete</button>
+			    <button className="btn waves-effect waves-light" onClick={this.props.action}>{this.props.buttonText}</button>
+			    <button className="btn waves-effect waves-light" onClick={this.props.deleteNote}>Delete</button>
 			</div>
 		);
 	}
