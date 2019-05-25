@@ -245,6 +245,14 @@ class App extends Component {
     });
   }
 
+  myRecipes = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      addingRecipe: false
+    });
+  }
+
   // event handler for createNote button click
   createNote = (event) => {
 
@@ -343,6 +351,14 @@ class App extends Component {
                 });    
             });
             alert(`Created new notebook ${newntbks} and added ${t} recipe in it successfully.`);
+
+            document.getElementById("existingNotebooks").value = "";
+            document.getElementById("newNotebook").value = "";
+            document.getElementById("noteHeading").value = "";
+            document.getElementById("noteIngredients").value = "";
+            document.getElementById("noteInstructions").value = "";
+            document.getElementById("noteImage").value = "";
+            document.getElementById("noteSource").value = "";      
         }      
       }else if (ntbks) {
         if ((notesArr.some(checkRecipeName) === true)) {
@@ -379,6 +395,14 @@ class App extends Component {
                 console.log(notesArr);
               });
               alert(`${t} recipe added to ${ntbks} notebook successfully`);
+
+              document.getElementById("existingNotebooks").value = "";
+              document.getElementById("newNotebook").value = "";
+              document.getElementById("noteHeading").value = "";
+              document.getElementById("noteIngredients").value = "";
+              document.getElementById("noteInstructions").value = "";
+              document.getElementById("noteImage").value = "";
+              document.getElementById("noteSource").value = "";   
         } 
       }
     }
@@ -404,7 +428,7 @@ class App extends Component {
     }).then(recipe => recipe.json())
       .then(recipe => {
 
-        console.log(recipe);
+        // console.log(recipe);
         
         let noteName;
         let instructions;
@@ -531,7 +555,7 @@ class App extends Component {
       recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients}/>
 
     }else if (this.state.addingRecipe === true) {
-      addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook} createNote={this.createNote}/>
+      addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook} createNote={this.createNote} myRecipes={this.myRecipes} logout={this.logout}/>
       
       console.log(`Selected notebook: ${this.state.notebookValue}`);
       console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);

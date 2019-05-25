@@ -21,7 +21,7 @@ class AddNote extends Component {
 			<div>
 				
 				<nav>
-				<button onClick={this.props.mainPage}>My Recipes</button>
+				<button onClick={this.props.myRecipes}>My Recipes</button>
 				<button onClick={this.props.logout}>Logout</button>
 				</nav>
 
