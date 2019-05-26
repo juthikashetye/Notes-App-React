@@ -269,9 +269,33 @@ class App extends Component {
   editNote = (event) => {
     event.preventDefault();
 
-    this.setState({
+    noteId = this.state.noteId;
+
+     this.setState({
       edit: true
     });
+
+    fetch(`/get-note/${noteId}`,{ 
+      method: 'GET',
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+      }).then(recipeDetails => recipeDetails.json())
+        .then(recipeDetails => {
+
+        console.log(recipeDetails);
+
+        this.setState({
+          value: recipeDetails[0].title,
+          imageLink: recipeDetails[0].image,
+          ingredients: recipeDetails[0].ingredients,
+          instructions: recipeDetails[0].instructions,
+          sourceLink: recipeDetails[0].source
+        });
+
+    });
+
   }
 
   // event handler for edit page input
@@ -491,13 +515,13 @@ class App extends Component {
            } 
 
           this.setState({
-              notebookRecipesArr,
-              noteId,
-              noteName,
-              instructions,
-              ingredients,
-              imageLink,
-              sourceLink 
+              notebookRecipesArr
+              // noteId,
+              // noteName,
+              // instructions,
+              // ingredients,
+              // imageLink,
+              // sourceLink 
             });
 
         }

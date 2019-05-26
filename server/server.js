@@ -188,6 +188,22 @@ app.get("/get-all-notebooks/:user_id", function(req, res) {
   });
 });
 
+// gets recipe for specified note
+app.get("/get-note/:noteId", function(req, res) {
+
+  var recipe = `SELECT * 
+                FROM notes
+                WHERE id = ?`
+
+  config.connection.query(recipe, [req.params.noteId], function(error, results, fields) {
+
+    if (error) res.send(error)
+    else res.json(results);
+
+  });
+});
+
+
 app.get("/get-session", function(req, res) {
   var user_info = {
     user_id: req.session.user_id,
