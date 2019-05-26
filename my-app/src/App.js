@@ -10,10 +10,10 @@ import Edit from './Edit';
 // Import Materialize
 // import M from "materialize-css";
 
-let name;
+// let name;
 let pass;
 let globalUserId;
-// let globalName;
+let globalName;
 let notebookId;
 let noteId;
 let nb_id = "";
@@ -156,32 +156,32 @@ class App extends Component {
   // event handler for signup button
   signUpClick = (event) => {
 
-    name = document.querySelector("#username").value
-    console.log(name);   
+    globalName = document.querySelector("#username").value
+    console.log(globalName);   
 
     pass = document.querySelector("#password").value
     console.log(pass);
 
-    if (name === "" || pass === "") {
+    if (globalName === "" || pass === "") {
         alert("Please fill required (*) fields.");
       }else {
-        this.signup(name,pass);
+        this.signup(globalName,pass);
       } 
   }
 
   // event handler for login button
   logInClick = (event) => {
 
-    name = document.querySelector("#username").value
-    console.log(name);   
+    globalName = document.querySelector("#username").value
+    console.log(globalName);   
 
     pass = document.querySelector("#password").value
     console.log(pass);
 
-    if (name === "" || pass === "") {
+    if (globalName === "" || pass === "") {
         alert("Please fill required (*) fields.");
       }else {
-        this.login(name,pass);
+        this.login(globalName,pass);
       }
   }
 
@@ -595,12 +595,14 @@ class App extends Component {
     if (this.state.recipeSelected === true) {
       if (this.state.edit === false) {
         // add values from notes table
-        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients} editNote={this.editNote} deleteNote={this.deleteNote} />
+        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} editNote={this.editNote} deleteNote={this.deleteNote} />
 
       }else if (this.state.edit === true) {
+        // recipePage = ""
         // add values from notes table
         recipePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.saveNote} cancelNote={this.cancelNote} handleInputChange={this.handleInputChange} />
-
+        console.log(this.state.ingredients);
+        console.log(this.state.instructions);
       }
 
     }else if (this.state.addingRecipe === true) {
