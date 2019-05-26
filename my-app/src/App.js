@@ -5,6 +5,7 @@ import Form from './Form';
 import Main from './Main';
 import Notes from './Notes';
 import AddNote from './AddNote';
+import Edit from './Edit';
 // import Nav from './Nav';
 // Import Materialize
 // import M from "materialize-css";
@@ -47,6 +48,7 @@ class App extends Component {
       nb_name:"" ,
       edit: false
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
   
   componentDidMount() {
@@ -127,14 +129,17 @@ class App extends Component {
         notebookRecipesArr: [],
         globalUserId: 0,
         notebookId: 0,
+        noteId: 0,
         noteName: "",
         instructions: "",
         ingredients: "",
         imageLink: "",
         sourceLink: "",
         n_name: "",
-        nb_name:"" 
+        nb_name:"" ,
+        edit: false 
       });
+
       console.log(this.state.loggedIn);
 
     });
@@ -192,14 +197,17 @@ class App extends Component {
     let x = document.getElementById("notebookNotes");
     let i = x.selectedIndex;
     notebookId = parseInt(x.options[i].getAttribute("selectednotebookid"));
+    noteId = parseInt(x.options[i].getAttribute("selectednoteid"));
     console.log(notebookId);
+    console.log(noteId);
 
     this.setState({
       recipeSelected: true,
       addingRecipe: false,
       value: event.target.value,
       notebookId: notebookId,
-      notebookRecipesArr: []
+      notebookRecipesArr: [],
+      noteId: noteId
     });
 
     this.getnotebookNotes(notebookId);
@@ -248,11 +256,32 @@ class App extends Component {
     });
   }
 
+  // event handler for My recipes button click
   myRecipes = (event) => {
     event.preventDefault();
 
     this.setState({
       addingRecipe: false
+    });
+  }
+
+  // event handler for edit button click
+  editNote = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      edit: true
+    });
+  }
+
+  // event handler for edit page input
+  handleInputChange(event) {
+
+    const newInputValue = event.target.value;
+    const name = event.target.name;
+
+    this.setState({
+      [name]: newInputValue
     });
   }
 
@@ -315,9 +344,10 @@ class App extends Component {
 
                 this.setState({
                   notebookArr,
-                  notesArr,
-                  nb_name,
-                  n_name
+                  notesArr
+                  // nb_name,
+                  // n_name,
+                  // noteId
                 })
                 console.log(notebookArr);
 
@@ -346,10 +376,10 @@ class App extends Component {
 
                     this.setState({
                       notebookArr,
-                      notesArr,
-                      nb_name,
-                      n_name,
-                      noteId
+                      notesArr
+                      // nb_name,
+                      // n_name,
+                      // noteId
                     })
 
                     console.log(notesArr);
@@ -394,10 +424,10 @@ class App extends Component {
 
                 this.setState({
                   notebookArr,
-                  notesArr,
-                  nb_name,
-                  n_name,
-                  noteId
+                  notesArr
+                  // nb_name,
+                  // n_name,
+                  // noteId
                 })
                 console.log(notesArr);
               });
@@ -415,9 +445,10 @@ class App extends Component {
     }
       this.setState({
         notebookArr,
-        notesArr,
-        nb_name,
-        n_name
+        notesArr
+        // nb_name,
+        // n_name,
+        // noteId
       })
 
   }
@@ -510,9 +541,9 @@ class App extends Component {
 
           this.setState({
             notebookArr,
-            notesArr,
-            nb_name,
-            n_name
+            notesArr
+            // nb_name,
+            // n_name
           });
 
           for (var nIndex = 0; nIndex < notebookArr.length; nIndex++) {
@@ -527,10 +558,10 @@ class App extends Component {
               }
               this.setState({
                 notebookArr,
-                notesArr,
-                nb_name,
-                n_name,
-                noteId
+                notesArr
+                // nb_name,
+                // n_name,
+                // noteId
               });
               
             }
@@ -546,6 +577,7 @@ class App extends Component {
     let activePage = ""
     let recipePage = ""
     let addRecipePage = ""
+    
 
     if(this.state.loggedIn === false){
 
@@ -553,21 +585,23 @@ class App extends Component {
 
     }else if((this.state.loggedIn === true) && (this.state.addingRecipe === false)){
 
-      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe} logout={this.logout}/>
+      activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} noteId={this.state.noteId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe} logout={this.logout}/>
 
       console.log(`Selected recipe title: ${this.state.value}`);
       console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
+      console.log(`Selected recipe's noteId: ${this.state.noteId}`);
         }
 
     if (this.state.recipeSelected === true) {
       if (this.state.edit === false) {
         // add values from notes table
-        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients} action={this.editNote} buttonText="Edit"/>
+        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients} editNote={this.editNote} deleteNote={this.deleteNote} />
+
       }else if (this.state.edit === true) {
         // add values from notes table
-        recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} ingredients={this.state.ingredients} action={this.saveNote} buttonText="Save"/>
+        recipePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.saveNote} cancelNote={this.cancelNote} handleInputChange={this.handleInputChange} />
+
       }
-      
 
     }else if (this.state.addingRecipe === true) {
       addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook} createNote={this.createNote} myRecipes={this.myRecipes} logout={this.logout}/>

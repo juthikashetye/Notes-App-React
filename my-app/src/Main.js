@@ -25,7 +25,7 @@ class Main extends Component {
 			    <div className="row">
 			      <div className="input-field col s6">
 
-			        <select id="notebookNotes" value={this.props.value} className={this.props.notebookId} onChange={this.props.handleSelectChange}>
+			        <select id="notebookNotes" value={this.props.value} selectednoteid={this.props.noteId} className={this.props.notebookId} onChange={this.props.handleSelectChange}>
 			        	<option disabled={true} value="">Select a recipe</option>
 
             			{this.props.notebookArr.map((optionGroup,ind) => {
@@ -35,7 +35,7 @@ class Main extends Component {
                         			{this.props.notesArr.map((option,ind) => {
                             			if(option.notesNb_id === optionGroup.nb_id){
 
-                                			return <option key={ind} selectednotebookid={option.notesNb_id} value={option.n_name}> 
+                                			return <option key={ind} selectednoteid={option.noteId} selectednotebookid={option.notesNb_id} value={option.n_name}> 
                                         				{option.n_name}
                                     				</option>
                         				
