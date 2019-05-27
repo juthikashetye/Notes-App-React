@@ -10,7 +10,6 @@ import Edit from './Edit';
 // Import Materialize
 // import M from "materialize-css";
 
-// let name;
 let pass;
 let globalUserId;
 let globalName;
@@ -22,6 +21,12 @@ let notesNb_id = "";
 let n_name = "";
 let notebookArr ="";
 let notesArr = "";
+let noteName;
+let instructions;
+let ingredients;
+let imageLink;
+let sourceLink;
+let notebookRecipesArr;
 
 class App extends Component {
   constructor() {
@@ -307,6 +312,66 @@ class App extends Component {
 
   }
 
+  // event handler for save button click
+  updateNote = (event) => {
+
+    event.preventDefault();
+    noteId = this.state.noteId;
+
+    let t = document.getElementById("editTitle").value;
+    let i = document.getElementById("editIngredients").value;
+    let it = document.getElementById("editInstructions").value;
+    let im = document.getElementById("editImage").value;
+    let s = document.getElementById("editSource").value;
+
+    fetch(`/recipe-update/${noteId}`,{ 
+      method: 'POST',
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+      body: JSON.stringify({
+        title : t,
+        ingredients: i,
+        instructions: it,
+        image: im,
+        source: s
+      }),
+    }).then(recipeDetails => recipeDetails.json())
+      .then(recipeDetails => {
+
+        console.log(recipeDetails);
+
+        noteId = this.state.noteId;
+        noteName = t;
+        instructions = it;
+        ingredients = i;
+        imageLink = im;
+        sourceLink = s;
+
+        notebookRecipesArr = [...this.state.notebookRecipesArr];
+
+        for (var j = notebookRecipesArr.length - 1; j >= 0; j--) {
+          if(notebookRecipesArr[j].noteId === noteId){
+            notebookRecipesArr[j] = {noteId, noteName, instructions, ingredients, imageLink, sourceLink};
+          }
+        }
+
+        this.setState({
+          notebookRecipesArr,
+          recipeSelected: true,
+          addingRecipe: false,
+          edit: false,
+          notebookId,
+          noteId
+        });
+
+      console.log(notebookRecipesArr);
+
+    });
+  
+}
+
   // event handler for edit page input
   handleInputChange(event) {
 
@@ -500,12 +565,8 @@ class App extends Component {
       .then(recipe => {
 
         console.log(recipe);
-        let noteName;
-        let instructions;
-        let ingredients;
-        let imageLink;
-        let sourceLink;
-        let notebookRecipesArr = [...this.state.notebookRecipesArr];
+
+        notebookRecipesArr = [...this.state.notebookRecipesArr];
 
         for (let i = 0; i < recipe.length; i++) {
 
@@ -525,12 +586,6 @@ class App extends Component {
 
           this.setState({
               notebookRecipesArr
-              // noteId,
-              // noteName,
-              // instructions,
-              // ingredients,
-              // imageLink,
-              // sourceLink 
             });
 
         }
@@ -633,7 +688,7 @@ class App extends Component {
       }else if (this.state.edit === true) {
         // recipePage = ""
         // add values from notes table
-        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.saveNote} cancelNote={this.myRecipes} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
+        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.myRecipes} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
         console.log(this.state.ingredients);
         console.log(this.state.instructions);
       }

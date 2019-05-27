@@ -203,6 +203,23 @@ app.get("/get-note/:noteId", function(req, res) {
   });
 });
 
+app.post("/recipe-update/:noteId", function(req, res) {
+
+  var updateRecipe = `UPDATE notes SET 
+                      title = ?, 
+                      ingredients = ?, 
+                      instructions = ?,
+                      image = ?,
+                      source = ?
+                      WHERE id = ?`
+  console.log(updateRecipe);
+  config.connection.query(updateRecipe, [req.body.title,req.body.ingredients,req.body.instructions,req.body.image,req.body.source,req.params.noteId], function(error, results, fields) {
+
+    if (error) res.send(error)
+    else res.json(results);
+
+  });
+});
 
 app.get("/get-session", function(req, res) {
   var user_info = {
