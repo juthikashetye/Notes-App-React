@@ -212,8 +212,20 @@ app.post("/recipe-update/:noteId", function(req, res) {
                       image = ?,
                       source = ?
                       WHERE id = ?`
-  console.log(updateRecipe);
+
   config.connection.query(updateRecipe, [req.body.title,req.body.ingredients,req.body.instructions,req.body.image,req.body.source,req.params.noteId], function(error, results, fields) {
+
+    if (error) res.send(error)
+    else res.json(results);
+
+  });
+});
+
+app.post("/recipe-delete/:noteId", function(req, res) {
+
+  var deleteRecipe = `DELETE FROM notes WHERE id = ?`
+
+  config.connection.query(deleteRecipe, [req.params.noteId], function(error, results, fields) {
 
     if (error) res.send(error)
     else res.json(results);

@@ -52,7 +52,8 @@ class App extends Component {
       sourceLink: "",
       n_name: "",
       nb_name:"" ,
-      edit: false
+      edit: false,
+      delete: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -146,7 +147,8 @@ class App extends Component {
         sourceLink: "",
         n_name: "",
         nb_name:"" ,
-        edit: false 
+        edit: false,
+        delete: false 
       });
 
       console.log(this.state.loggedIn);
@@ -216,7 +218,8 @@ class App extends Component {
       value: event.target.value,
       notebookId: notebookId,
       notebookRecipesArr: [],
-      noteId: noteId
+      noteId: noteId,
+      delete: false
     });
 
     this.getnotebookNotes(notebookId);
@@ -262,7 +265,8 @@ class App extends Component {
     this.setState({
       recipeSelected: false,
       addingRecipe: true,
-      notebookId: 0
+      notebookId: 0,
+      delete: false
     });
   }
 
@@ -275,7 +279,23 @@ class App extends Component {
       addingRecipe: false,
       edit: false,
       notebookId,
-      noteId
+      noteId,
+      delete: true
+    });
+  }
+
+  // event handler for cancel button click
+  cancelNote = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      notebookRecipesArr,
+      recipeSelected: true,
+      addingRecipe: false,
+      edit: false,
+      notebookId,
+      noteId,
+      delete: false
     });
   }
 
@@ -286,7 +306,8 @@ class App extends Component {
     noteId = this.state.noteId;
 
      this.setState({
-      edit: true
+      edit: true,
+      delete: false
     });
 
     fetch(`/get-note/${noteId}`,{ 
@@ -363,7 +384,8 @@ class App extends Component {
           addingRecipe: false,
           edit: false,
           notebookId,
-          noteId
+          noteId,
+          delete: false
         });
 
       console.log(notebookRecipesArr);
@@ -371,6 +393,62 @@ class App extends Component {
     });
   
 }
+
+// event handler for delete button click
+  deleteNote = (event) => {
+    event.preventDefault();
+
+    noteId = this.state.noteId;
+
+     this.setState({
+      edit: false
+    });
+
+    fetch(`/recipe-delete/${noteId}`,{ 
+      method: 'POST',
+      headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+      }).then(recipe => recipe.json())
+        .then(recipe => {
+
+        console.log(recipe);
+
+        noteId = this.state.noteId;
+
+        notebookRecipesArr = [...this.state.notebookRecipesArr];
+        notesArr = [...this.state.notesArr];
+
+        for (var j = notebookRecipesArr.length - 1; j >= 0; j--) {
+          if(notebookRecipesArr[j].noteId === noteId){
+            notebookRecipesArr.splice(j,1);
+          }
+        }
+
+        for (var x = notesArr.length - 1; x >= 0; x--) {
+          if(notesArr[x].noteId === noteId){
+            notesArr.splice(x,1);
+          }
+        }
+
+        this.setState({
+          notebookRecipesArr,
+          notesArr,
+          recipeSelected: false,
+          addingRecipe: false,
+          edit: false,
+          // notebookId,
+          // noteId,
+          delete: true
+        });
+
+        console.log("After deleting recipe notebookRecipesArr:",notebookRecipesArr);
+        console.log("After deleting recipe notesArr:",notesArr);
+
+    });
+
+  }
 
   // event handler for edit page input
   handleInputChange(event) {
@@ -681,16 +759,18 @@ class App extends Component {
     }
 
     if (this.state.recipeSelected === true) {
-      if (this.state.edit === false) {
+      if ((this.state.edit === false) && (this.state.delete === false)) {
         // add values from notes table
         recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} editNote={this.editNote} deleteNote={this.deleteNote} />
 
       }else if (this.state.edit === true) {
         // recipePage = ""
         // add values from notes table
-        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.myRecipes} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
+        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.cancelNote} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
         console.log(this.state.ingredients);
         console.log(this.state.instructions);
+      }else if ((this.state.delete === true) && (this.state.edit === false)){
+        recipePage = <p>Explore more by selecting a recipe or create something new.</p>
       }
 
     }else if (this.state.addingRecipe === true) {
@@ -698,8 +778,10 @@ class App extends Component {
       
       console.log(`Selected notebook: ${this.state.notebookValue}`);
       console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);
-    }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true)){
+    }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === false)){
       recipePage = <p>Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
+    }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === true)){
+      recipePage = <p>Deleted recipe successfully. Explore more by selecting a recipe or create something new.</p>
     }
 
     return (
