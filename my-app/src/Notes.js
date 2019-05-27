@@ -1,28 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 // Import Materialize
 // import M from "materialize-css";
 
-class Notes extends Component {
-
-	// constructor(props) {
- //    super(props);
- 
- //  }
-  
-	componentDidMount() {
-
-	}
-
-	render(){
-		return (
+const Notes = (props) => (
 
 			<div>
-				<h2>{this.props.notesTitle}</h2>
+				<h2>{props.notesTitle}</h2>
 
-				{this.props.notebookRecipesArr.map((content,ind) => {
+				{props.notebookRecipesArr.map((content,ind) => {
 
-					if (content.noteName === this.props.notesTitle) {
+					if (content.noteName === props.notesTitle) {
 
 						return 	<div key={`${ind}div`}>
 									<h3>Ingredients</h3>
@@ -39,10 +27,9 @@ class Notes extends Component {
 					
 			    })}
 
-			    <button className="btn waves-effect waves-light" onClick={this.props.editNote}>Edit</button>
-			    <button className="btn waves-effect waves-light" onClick={this.props.deleteNote}>Delete</button>
+			    <button className="btn waves-effect waves-light" onClick={props.editNote}>Edit</button>
+			    <button className="btn waves-effect waves-light" onClick={props.deleteNote}>Delete</button>
 			</div>
 		);
-	}
-}
+
 export default Notes;

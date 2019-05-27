@@ -19,14 +19,14 @@ let nb_id = "";
 let nb_name = "";
 let notesNb_id = "";
 let n_name = "";
-let notebookArr ="";
-let notesArr = "";
+let notebookArr;
+let notesArr;
+let notebookRecipesArr;
 let noteName;
 let instructions;
 let ingredients;
 let imageLink;
 let sourceLink;
-let notebookRecipesArr;
 
 class App extends Component {
   constructor() {
@@ -45,13 +45,11 @@ class App extends Component {
       globalName: "",
       notebookId: 0,
       noteId: 0,
-      noteName: "",
+      // noteName: "",
       instructions: "",
       ingredients: "",
       imageLink: "",
       sourceLink: "",
-      n_name: "",
-      nb_name:"" ,
       edit: false,
       delete: false
     }
@@ -96,13 +94,13 @@ class App extends Component {
     }).then(l => l.json())
       .then(l => {
 
-      console.log(l);
+      // console.log(l);
 
       if (l.msg === "You are logged in.") {
         alert(l.msg);
         globalUserId = l.user_id;
         globalName = l.username;
-        console.log(globalUserId);
+        // console.log(globalUserId);
         this.setState({
           loggedIn: true,
           globalUserId: l.user_id,
@@ -126,7 +124,7 @@ class App extends Component {
     }).then(l => l.json())
       .then(l => {
 
-      console.log(l);
+      // console.log(l);
       this.setState ({
         loggedIn : false,
         value: "",
@@ -140,38 +138,28 @@ class App extends Component {
         globalName: "",
         notebookId: 0,
         noteId: 0,
-        noteName: "",
+        // noteName: "",
         instructions: "",
         ingredients: "",
         imageLink: "",
         sourceLink: "",
-        n_name: "",
-        nb_name:"" ,
         edit: false,
         delete: false 
       });
 
-      console.log(this.state.loggedIn);
+      // console.log(this.state.loggedIn);
 
     });
-  }
-
-  // testing function
-  handleClick = () => {
-    fetch("/get-all-notes/1")
-    .then(response => response.json())
-    .then(myJson => console.log(JSON.stringify(myJson))
-    );
   }
 
   // event handler for signup button
   signUpClick = (event) => {
 
     globalName = document.querySelector("#username").value
-    console.log(globalName);   
+    // console.log(globalName);   
 
     pass = document.querySelector("#password").value
-    console.log(pass);
+    // console.log(pass);
 
     if (globalName === "" || pass === "") {
         alert("Please fill required (*) fields.");
@@ -184,10 +172,10 @@ class App extends Component {
   logInClick = (event) => {
 
     globalName = document.querySelector("#username").value
-    console.log(globalName);   
+    // console.log(globalName);   
 
     pass = document.querySelector("#password").value
-    console.log(pass);
+    // console.log(pass);
 
     if (globalName === "" || pass === "") {
         alert("Please fill required (*) fields.");
@@ -201,16 +189,16 @@ class App extends Component {
     
     event.preventDefault();
     
-    console.log(event.target.value);
+    // console.log(event.target.value);
     
-    console.log(event.target.selectedIndex);
+    // console.log(event.target.selectedIndex);
 
     let x = document.getElementById("notebookNotes");
     let i = x.selectedIndex;
     notebookId = parseInt(x.options[i].getAttribute("selectednotebookid"));
     noteId = parseInt(x.options[i].getAttribute("selectednoteid"));
-    console.log(notebookId);
-    console.log(noteId);
+    // console.log(notebookId);
+    // console.log(noteId);
 
     this.setState({
       recipeSelected: true,
@@ -230,9 +218,9 @@ class App extends Component {
     
     event.preventDefault();
 
-    console.log(`Selected existing notebook name: ${event.target.value}`);
+    // console.log(`Selected existing notebook name: ${event.target.value}`);
     
-    console.log(event.target.selectedIndex);
+    // console.log(event.target.selectedIndex);
 
     if (event.target.selectedIndex !== 0) {
 
@@ -241,7 +229,7 @@ class App extends Component {
       let classofselect =  y.options[z].getAttribute("class");
 
       notebookId = parseInt(classofselect);
-      console.log(notebookId);
+      // console.log(notebookId);
 
       this.setState({
         notebookValue: event.target.value,
@@ -319,7 +307,7 @@ class App extends Component {
       }).then(recipeDetails => recipeDetails.json())
         .then(recipeDetails => {
 
-        console.log(recipeDetails);
+        // console.log(recipeDetails);
 
         this.setState({
           value: recipeDetails[0].title,
@@ -361,7 +349,7 @@ class App extends Component {
     }).then(recipeDetails => recipeDetails.json())
       .then(recipeDetails => {
 
-        console.log(recipeDetails);
+        // console.log(recipeDetails);
 
         noteId = this.state.noteId;
         noteName = t;
@@ -388,7 +376,7 @@ class App extends Component {
           delete: false
         });
 
-      console.log(notebookRecipesArr);
+      // console.log(notebookRecipesArr);
 
     });
   
@@ -413,7 +401,7 @@ class App extends Component {
       }).then(recipe => recipe.json())
         .then(recipe => {
 
-        console.log(recipe);
+        // console.log(recipe);
 
         noteId = this.state.noteId;
 
@@ -438,13 +426,11 @@ class App extends Component {
           recipeSelected: false,
           addingRecipe: false,
           edit: false,
-          // notebookId,
-          // noteId,
           delete: true
         });
 
-        console.log("After deleting recipe notebookRecipesArr:",notebookRecipesArr);
-        console.log("After deleting recipe notesArr:",notesArr);
+        // console.log("After deleting recipe notebookRecipesArr:",notebookRecipesArr);
+        // console.log("After deleting recipe notesArr:",notesArr);
 
     });
 
@@ -498,7 +484,7 @@ class App extends Component {
         }else if ((notebookArr.some(checkNotebookName) === false) && (notesArr.some(checkRecipeName) === false)){
 
             let ob = newntbks;
-            console.log(ob);
+            // console.log(ob);
 
             fetch(`/add-notebook/${globalUserId}`,{
               method: 'POST',
@@ -511,7 +497,7 @@ class App extends Component {
             .then(response => response.json())
             .then(myJson => {
 
-                console.log(myJson)
+                // console.log(myJson)
 
                 nb_id = myJson;
                 nb_name = newntbks;
@@ -521,11 +507,8 @@ class App extends Component {
                 this.setState({
                   notebookArr,
                   notesArr
-                  // nb_name,
-                  // n_name,
-                  // noteId
-                })
-                console.log(notebookArr);
+                });
+                // console.log(notebookArr);
 
                 fetch(`/add-notes/${nb_id}`, {
                   method: 'POST',
@@ -542,7 +525,7 @@ class App extends Component {
                   })
                 }).then(res => res.json())
                   .then(r => {
-                    console.log(r);
+                    // console.log(r);
 
                     noteId = r;
                     notesNb_id = nb_id;
@@ -553,12 +536,9 @@ class App extends Component {
                     this.setState({
                       notebookArr,
                       notesArr
-                      // nb_name,
-                      // n_name,
-                      // noteId
-                    })
+                    });
 
-                    console.log(notesArr);
+                    // console.log(notesArr);
                 });    
             });
             alert(`Created new notebook ${newntbks} and added ${t} recipe in it successfully.`);
@@ -590,7 +570,7 @@ class App extends Component {
               })
             }).then(res => res.json())
               .then(newNoteId => {
-                console.log(newNoteId);
+                // console.log(newNoteId);
 
                 noteId = newNoteId;
                 notesNb_id = notebookId;
@@ -601,11 +581,8 @@ class App extends Component {
                 this.setState({
                   notebookArr,
                   notesArr
-                  // nb_name,
-                  // n_name,
-                  // noteId
-                })
-                console.log(notesArr);
+                });
+                // console.log(notesArr);
               });
               alert(`${t} recipe added to ${ntbks} notebook successfully`);
 
@@ -622,11 +599,7 @@ class App extends Component {
       this.setState({
         notebookArr,
         notesArr
-        // nb_name,
-        // n_name,
-        // noteId
-      })
-
+      });
   }
 
   // gets notes for a specific notebook
@@ -642,7 +615,7 @@ class App extends Component {
     }).then(recipe => recipe.json())
       .then(recipe => {
 
-        console.log(recipe);
+        // console.log(recipe);
 
         notebookRecipesArr = [...this.state.notebookRecipesArr];
 
@@ -661,16 +634,13 @@ class App extends Component {
                                   {noteId, noteName, instructions, ingredients, imageLink, sourceLink}];
 
            } 
-
           this.setState({
               notebookRecipesArr
             });
-
         }
-        console.log(notebookRecipesArr);
+        // console.log(notebookRecipesArr);
 
       });
-
   }
 
   // gets notebook name and note name for active user
@@ -686,7 +656,7 @@ class App extends Component {
     }).then(nt => nt.json())
       .then(nt => {
 
-        console.log(nt);
+        // console.log(nt);
 
         notebookArr =[...this.state.notebookArr];
         notesArr = [...this.state.notesArr];
@@ -697,19 +667,14 @@ class App extends Component {
 
             nb_name = nt[i].notebook_name;
             nb_id = nt[i].Notebooks_Id;
-            // notesNb_id = nt[i].notesNb_Id;
-            // n_name = nt[i].title;
             
             notebookArr = [...this.state.notebookArr, {nb_id, nb_name}];
-            // notesArr = [...this.state.notesArr, {noteId, notesNb_id, n_name}];
    
           }
 
           this.setState({
             notebookArr,
             notesArr
-            // nb_name,
-            // n_name
           });
 
           for (var nIndex = 0; nIndex < notebookArr.length; nIndex++) {
@@ -725,15 +690,12 @@ class App extends Component {
               this.setState({
                 notebookArr,
                 notesArr
-                // nb_name,
-                // n_name,
-                // noteId
               });
               
             }
         }
-        console.log(notebookArr);
-        console.log(notesArr);
+        // console.log(notebookArr);
+        // console.log(notesArr);
 
       });
   }
@@ -753,22 +715,24 @@ class App extends Component {
 
       activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} noteId={this.state.noteId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe} logout={this.logout}/>
 
-      console.log(`Selected recipe title: ${this.state.value}`);
-      console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
-      console.log(`Selected recipe's noteId: ${this.state.noteId}`);
+      // console.log(`Selected recipe title: ${this.state.value}`);
+      // console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
+      // console.log(`Selected recipe's noteId: ${this.state.noteId}`);
     }
 
     if (this.state.recipeSelected === true) {
       if ((this.state.edit === false) && (this.state.delete === false)) {
+
         // add values from notes table
         recipePage = <Notes notesTitle={this.state.value} notebookRecipesArr={this.state.notebookRecipesArr} editNote={this.editNote} deleteNote={this.deleteNote} />
 
       }else if (this.state.edit === true) {
-        // recipePage = ""
+
         // add values from notes table
         activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.cancelNote} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
-        console.log(this.state.ingredients);
-        console.log(this.state.instructions);
+        // console.log(this.state.ingredients);
+        // console.log(this.state.instructions);
+
       }else if ((this.state.delete === true) && (this.state.edit === false)){
         recipePage = <p>Explore more by selecting a recipe or create something new.</p>
       }
@@ -776,10 +740,12 @@ class App extends Component {
     }else if (this.state.addingRecipe === true) {
       addRecipePage = <AddNote notebookArr={this.state.notebookArr} notebookValue={this.state.notebookValue} notebookId={this.state.notebookId} selectExistingBook={this.selectExistingBook} createNote={this.createNote} myRecipes={this.myRecipes} logout={this.logout}/>
       
-      console.log(`Selected notebook: ${this.state.notebookValue}`);
-      console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);
+      // console.log(`Selected notebook: ${this.state.notebookValue}`);
+      // console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);
+
     }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === false)){
       recipePage = <p>Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
+
     }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === true)){
       recipePage = <p>Deleted recipe successfully. Explore more by selecting a recipe or create something new.</p>
     }

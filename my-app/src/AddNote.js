@@ -1,28 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 // import Nav from './Nav';
 // Import Materialize
 // import M from "materialize-css";
 
-class AddNote extends Component {
-
-	// constructor(props) {
- //    super(props);
-  
- //  }
-  
-	componentDidMount() {
-
-	}
-
-	render(){
-		return (
+const AddNote = (props) => (
 
 			<div>
 				
 				<nav>
-				<button onClick={this.props.myRecipes}>My Recipes</button>
-				<button onClick={this.props.logout}>Logout</button>
+				<button onClick={props.myRecipes}>My Recipes</button>
+				<button onClick={props.logout}>Logout</button>
 				</nav>
 
 				<h2>Add a New Recipe</h2>
@@ -47,10 +35,10 @@ class AddNote extends Component {
 				<h4>Please fill only one of the alternatives below.</h4>
 
 				<label htmlFor="existingNotebooks"># Add recipe in existing Notebook</label>
-				<select id="existingNotebooks" value={this.props.notebookValue} className={this.props.notebookId} onChange={this.props.selectExistingBook}>
+				<select id="existingNotebooks" value={props.notebookValue} className={props.notebookId} onChange={props.selectExistingBook}>
 			        	<option value="">None Selected</option>
 
-            			{this.props.notebookArr.map((optionGroup,ind) => {
+            			{props.notebookArr.map((optionGroup,ind) => {
 
                 				return <option key={ind} className={optionGroup.nb_id} value={optionGroup.nb_name}>{optionGroup.nb_name}</option>
             				}
@@ -63,9 +51,8 @@ class AddNote extends Component {
 				<input id="newNotebook" type="text" placeholder="New notebook name" /><br />
 
 
-			    <button className="btn waves-effect waves-light" id="createNote" onClick={this.props.createNote}>Create Note</button>
+			    <button className="btn waves-effect waves-light" id="createNote" onClick={props.createNote}>Create Note</button>
 			</div>
 		);
-	}
-}
+
 export default AddNote;
