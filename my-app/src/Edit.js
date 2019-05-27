@@ -18,6 +18,13 @@ class Edit extends Component {
 		return (
 
 			<div>
+				<nav>
+				<button onClick={this.props.myRecipes}>My Recipes</button>
+				<button onClick={this.props.logout}>Logout</button>
+				</nav>
+
+				<h2>Edit Recipe</h2>
+
 				<label htmlFor="editTitle">Recipe Name</label>
 				<input id="editTitle" type="text" name="value" value={this.props.recipeTitle} onChange={this.props.handleInputChange} /><br />
 

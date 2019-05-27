@@ -37,6 +37,7 @@ class App extends Component {
       notesArr: [],
       notebookRecipesArr: [],
       globalUserId: 0,
+      globalName: "",
       notebookId: 0,
       noteId: 0,
       noteName: "",
@@ -94,10 +95,12 @@ class App extends Component {
       if (l.msg === "You are logged in.") {
         alert(l.msg);
         globalUserId = l.user_id;
+        globalName = l.username;
         console.log(globalUserId);
         this.setState({
           loggedIn: true,
-          globalUserId: l.user_id
+          globalUserId: l.user_id,
+          globalName: l.username
         });
         this.getnotes(globalUserId);
       }else {
@@ -128,6 +131,7 @@ class App extends Component {
         notesArr: [],
         notebookRecipesArr: [],
         globalUserId: 0,
+        globalName: "",
         notebookId: 0,
         noteId: 0,
         noteName: "",
@@ -252,7 +256,8 @@ class App extends Component {
 
     this.setState({
       recipeSelected: false,
-      addingRecipe: true
+      addingRecipe: true,
+      notebookId: 0
     });
   }
 
@@ -261,7 +266,11 @@ class App extends Component {
     event.preventDefault();
 
     this.setState({
-      addingRecipe: false
+      recipeSelected: true,
+      addingRecipe: false,
+      edit: false,
+      notebookId,
+      noteId
     });
   }
 
@@ -607,14 +616,14 @@ class App extends Component {
 
       activePage = <Form logInClick={this.logInClick} signUpClick={this.signUpClick} />
 
-    }else if((this.state.loggedIn === true) && (this.state.addingRecipe === false)){
+    }else if((this.state.loggedIn === true) && (this.state.addingRecipe === false) && (this.state.edit === false)){
 
       activePage = <Main notesArr={this.state.notesArr} notebookArr={this.state.notebookArr} value={this.state.value} notebookId={this.state.notebookId} noteId={this.state.noteId} handleSelectChange={this.handleSelectChange} addNewRecipe={this.addNewRecipe} logout={this.logout}/>
 
       console.log(`Selected recipe title: ${this.state.value}`);
       console.log(`Selected recipe's notebookId: ${this.state.notebookId}`);
       console.log(`Selected recipe's noteId: ${this.state.noteId}`);
-        }
+    }
 
     if (this.state.recipeSelected === true) {
       if (this.state.edit === false) {
@@ -624,7 +633,7 @@ class App extends Component {
       }else if (this.state.edit === true) {
         // recipePage = ""
         // add values from notes table
-        recipePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.saveNote} cancelNote={this.cancelNote} handleInputChange={this.handleInputChange} />
+        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.saveNote} cancelNote={this.myRecipes} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
         console.log(this.state.ingredients);
         console.log(this.state.instructions);
       }
@@ -634,6 +643,8 @@ class App extends Component {
       
       console.log(`Selected notebook: ${this.state.notebookValue}`);
       console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);
+    }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true)){
+      recipePage = <p>Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
     }
 
     return (

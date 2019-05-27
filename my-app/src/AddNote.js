@@ -48,7 +48,7 @@ class AddNote extends Component {
 
 				<label htmlFor="existingNotebooks"># Add recipe in existing Notebook</label>
 				<select id="existingNotebooks" value={this.props.notebookValue} className={this.props.notebookId} onChange={this.props.selectExistingBook}>
-			        	<option value="">Select a Notebook</option>
+			        	<option value="">None Selected</option>
 
             			{this.props.notebookArr.map((optionGroup,ind) => {
 
