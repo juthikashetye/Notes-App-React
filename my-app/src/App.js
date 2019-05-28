@@ -55,7 +55,7 @@ class App extends Component {
       textArea: "return true"
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.handleCopyPaste = this.handleCopyPaste.bind(this);
+    this.handleCopyPaste = this.handleCopyPaste.bind(this);
   }
   
   componentDidMount() {
@@ -447,26 +447,23 @@ class App extends Component {
 
     const newInputValue = event.target.value;
     const name = event.target.name;
+    
 
     this.setState({
       [name]: newInputValue
     });
   }
 
-  // handleCopyPaste(event) {
+  handleCopyPaste(event) {
 
-  //   // document.getElementById("editInstructions").setAttribute("onCopy", "return true");
-  //   // document.getElementById("editInstructions").setAttribute("onPaste", "return true");
+    let textareaTag = document.getElementById("editInstructions");
+    let att = document.createAttribute("onpaste");
+    att.value = "return true";
+    textareaTag.setAttributeNode(att);
 
-  //   // return "return true"
+    console.log(att.value);
 
-  //   const newInputValue = event.target.value;
-  //   const name = event.target.name;
-
-  //   this.setState({
-  //     [name]: newInputValue
-  //   });
-  // }
+  }
 
   // event handler for createNote button click
   createNote = (event) => {
@@ -750,7 +747,7 @@ class App extends Component {
       }else if (this.state.edit === true) {
 
         // add values from notes table
-        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.cancelNote} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
+        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.cancelNote} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} handleCopyPaste={this.handleCopyPaste} />
         // console.log(this.state.ingredients);
         // console.log(this.state.instructions);
 
