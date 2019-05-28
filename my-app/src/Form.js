@@ -1,30 +1,37 @@
 import React from 'react';
 import './App.css';
 
-//stateless component
 
 const Form = (props) => (
-	//no constructor, no state property 
 
-  <div className="userLoginSignUp">
-    <div className="row">
-      <div className="input-field col s12 m6 offset-m3">
-        <input id="username" type="text" name="name_input" className="validate" />
-        <label htmlFor="username">Username</label>
-        <span className="helper-text left-align">Required*</span>
+  <div className="container mt-3">
+    <h1 className="text-center mt-5 mb-5"> Note-It </h1>
+    <form className="userLoginSignUp">
+    
+      <div className="form-row justify-content-md-center no-gutters">
+        <div className="form-group col-md-7 col-lg-6">
+          <label htmlFor="username">Username</label>
+          <input id="username" type="text" placeholder="username*" className="form-control" />
+        </div>
       </div>
-    </div>
-    <div className="row">
-      <div className="input-field col s12 m6 offset-m3">
-        <input id="password" type="password" name="password_input" className="validate" />
-        <label htmlFor="password">Password</label>
-        <span className="helper-text left-align">Required*</span>
+
+      
+      <div className="form-row justify-content-md-center no-gutters">
+        <div className="form-group col-md-7 col-lg-6">
+          <label htmlFor="password">Password</label>
+          <input id="password" type="password" placeholder="password*" className="form-control" />
+          <small id="passwordHelp" className="form-text text-muted">Username and password are case sensitive.</small>
+        </div>
       </div>
-    </div>
-    <button onClick={props.logInClick} className="btn btn-primary btn-md" id="loginButton">LOGIN</button>
-    <button onClick={props.signUpClick} className="btn btn-secondary btn-md" id="signupButton">SIGN-UP</button>
+
+      <div className="form-row justify-content-center">
+
+        <button onClick={props.logInClick} className="form-group btn btn-primary btn-md col-sm-3 col-md-3 col-lg-2 m-2" id="loginButton">LOGIN</button>
+        <button onClick={props.signUpClick} className="form-group btn btn-secondary btn-md col-sm-3 col-md-3 col-lg-2 m-2" id="signupButton">SIGN-UP</button>
+
+      </div>
+     </form>
    </div>
-
 );
 
 export default Form;

@@ -155,6 +155,8 @@ class App extends Component {
   // event handler for signup button
   signUpClick = (event) => {
 
+    event.preventDefault();
+
     globalName = document.querySelector("#username").value
     // console.log(globalName);   
 
@@ -170,6 +172,8 @@ class App extends Component {
 
   // event handler for login button
   logInClick = (event) => {
+
+    event.preventDefault();
 
     globalName = document.querySelector("#username").value
     // console.log(globalName);   
@@ -752,13 +756,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="container center-align">
+        
 
          {activePage}
          {recipePage}
          {addRecipePage}
 
-        </div>
+      
       </div>
     );
   }
