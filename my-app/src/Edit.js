@@ -20,7 +20,7 @@ const Edit = (props) => (
 				<textarea id="editIngredients" rows="4" cols="50" name="ingredients" value={props.ingredients} onChange={props.handleInputChange}></textarea><br />
 				
 				<label htmlFor="editInstructions">Instructions</label>
-				<textarea id="editInstructions" rows="4" cols="50" name="instructions" value={props.instructions} onChange={props.handleInputChange}></textarea><br />
+				<textarea id="editInstructions" rows="10" cols="50" name="instructions" value={props.instructions} onChange={props.handleInputChange} onCopy={props.handleInputChange} onPaste={props.handleInputChange} ></textarea><br />
 
 				<label htmlFor="editImage">Image (optional)</label>
 				<input id="editImage" type="text" name="imageLink" value={props.imageLink} onChange={props.handleInputChange} /><br />

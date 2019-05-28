@@ -5,19 +5,18 @@ import './App.css';
 
 const Notes = (props) => (
 
-			<div className="container">
+			<div className="container bg-light">
 				<h2 className="text-center">{props.notesTitle}</h2>
 
 				{props.notebookRecipesArr.map((content,ind) => {
 
 					if (content.noteName === props.notesTitle) {
 
-						return 	<div className="w-50 m-auto" key={`${ind}div`}>
+						return 	<div className="recipeDetails m-auto clearfix" key={`${ind}div`}>
 									<h3>Ingredients</h3>
 									<p key={`${ind}ingd`} className="ingredientPara"> {content.ingredients} </p>
 									<h3>Instructions</h3>
-									<p key={`${ind}inst`} className="instructionPara"> {content.instructions} </p>
-									<img key={`${ind}img`} className="recipeImage" src={content.imageLink} alt={content.imageTitle} />
+									<p key={`${ind}inst`} className="instructionPara"> <img key={`${ind}img`} className="recipeImage rounded-lg" src={content.imageLink} alt={content.imageTitle} /> {content.instructions} </p>
 									<a key={`${ind}link`} className="recipeLink" href={content.sourceLink}> {content.sourceLink} </a>
 									<br/>
 									<button className="btn btn-md btn-primary m-2" type="button" onClick={props.editNote}>Edit</button>

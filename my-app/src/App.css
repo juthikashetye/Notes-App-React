@@ -6,8 +6,26 @@ html {
     line-height: 1.15;
 }
 
-img {
-  width: 50%;
+.recipeDetails {
+  width: 80%;
+  padding: 2%;
+  background-color: rgb(255,226,205);
+}
+
+.recipeImage {
+  width: 100%;
+  float: none;
+  margin-right: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  /*border: 5px solid #f1f1f1;*/
+  /*border-radius: 3px;*/
+  /*float: right;*/
+}
+
+.recipeLink{
+  clear: both;
+  overflow-wrap: break-word;
 }
 
 .navbar {
@@ -67,5 +85,14 @@ img {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 600px) {
+  /*.instructionPara { float: right;}*/
+  .recipeImage {
+    float: right; 
+    width: 40%;
+    margin: 2%;
   }
 }

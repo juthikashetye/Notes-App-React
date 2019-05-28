@@ -51,9 +51,11 @@ class App extends Component {
       imageLink: "",
       sourceLink: "",
       edit: false,
-      delete: false
+      delete: false,
+      textArea: "return true"
     }
     this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleCopyPaste = this.handleCopyPaste.bind(this);
   }
   
   componentDidMount() {
@@ -451,6 +453,21 @@ class App extends Component {
     });
   }
 
+  // handleCopyPaste(event) {
+
+  //   // document.getElementById("editInstructions").setAttribute("onCopy", "return true");
+  //   // document.getElementById("editInstructions").setAttribute("onPaste", "return true");
+
+  //   // return "return true"
+
+  //   const newInputValue = event.target.value;
+  //   const name = event.target.name;
+
+  //   this.setState({
+  //     [name]: newInputValue
+  //   });
+  // }
+
   // event handler for createNote button click
   createNote = (event) => {
 
@@ -738,7 +755,10 @@ class App extends Component {
         // console.log(this.state.instructions);
 
       }else if ((this.state.delete === true) && (this.state.edit === false)){
-        recipePage = <p>Explore more by selecting a recipe or create something new.</p>
+        recipePage = 
+        <div className="container mx-auto mt-5 mb-5">
+          <p className="text-center">Explore more by selecting a recipe or create something new.</p>
+        </div>
       }
 
     }else if (this.state.addingRecipe === true) {
@@ -748,10 +768,15 @@ class App extends Component {
       // console.log(`Selected notebook's notebookId: ${this.state.notebookId}`);
 
     }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === false)){
-      recipePage = <p>Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
-
+      recipePage = 
+      <div className="container mx-auto mt-5 mb-5">
+        <p className="text-center">Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
+      </div>
     }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === true)){
-      recipePage = <p>Deleted recipe successfully. Explore more by selecting a recipe or create something new.</p>
+      recipePage = 
+      <div className="container mx-auto mt-5 mb-5">
+        <p className="text-center">Deleted recipe successfully. Explore more by selecting a recipe or create something new.</p>
+      </div>
     }
 
     return (
