@@ -55,13 +55,20 @@ class App extends Component {
       textArea: "return true"
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleCopyPaste = this.handleCopyPaste.bind(this);
+    // this.handleCopyPaste = this.handleCopyPaste.bind(this);
   }
   
   componentDidMount() {
 
     this.getnotes(this.state.globalUserId);
     this.getnotebookNotes(notebookId);
+
+    // let textareaTag = document.getElementById("editInstructions");
+    // let att = document.createAttribute("onpaste");
+    // att.value = "return true";
+    // textareaTag.setAttributeNode(att);
+
+    // console.log(att.value);
 
   }
 
@@ -448,22 +455,23 @@ class App extends Component {
     const newInputValue = event.target.value;
     const name = event.target.name;
     
-
     this.setState({
       [name]: newInputValue
     });
+
+    console.log(newInputValue);
   }
 
-  handleCopyPaste(event) {
+  // handleCopyPaste(event) {
 
-    let textareaTag = document.getElementById("editInstructions");
-    let att = document.createAttribute("onpaste");
-    att.value = "return true";
-    textareaTag.setAttributeNode(att);
+  //   let textareaTag = document.getElementById("editInstructions");
+  //   let att = document.createAttribute("onpaste");
+  //   att.value = "return true";
+  //   textareaTag.setAttributeNode(att);
 
-    console.log(att.value);
+  //   console.log(att.value);
 
-  }
+  // }
 
   // event handler for createNote button click
   createNote = (event) => {
@@ -747,7 +755,7 @@ class App extends Component {
       }else if (this.state.edit === true) {
 
         // add values from notes table
-        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.cancelNote} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} handleCopyPaste={this.handleCopyPaste} />
+        activePage = <Edit recipeTitle={this.state.value} ingredients={this.state.ingredients} instructions={this.state.instructions} imageLink={this.state.imageLink} sourceLink={this.state.sourceLink} saveNote={this.updateNote} cancelNote={this.cancelNote} myRecipes={this.myRecipes} logout={this.logout} handleInputChange={this.handleInputChange} />
         // console.log(this.state.ingredients);
         // console.log(this.state.instructions);
 
