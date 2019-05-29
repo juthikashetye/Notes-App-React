@@ -51,8 +51,7 @@ class App extends Component {
       imageLink: "",
       sourceLink: "",
       edit: false,
-      delete: false,
-      textArea: "return true"
+      delete: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     // this.handleCopyPaste = this.handleCopyPaste.bind(this);
@@ -342,7 +341,9 @@ class App extends Component {
 
     let t = document.getElementById("editTitle").value;
     let i = document.getElementById("editIngredients").value;
+
     let it = document.getElementById("editInstructions").value;
+    console.log(it);
     let im = document.getElementById("editImage").value;
     let s = document.getElementById("editSource").value;
 
@@ -380,6 +381,11 @@ class App extends Component {
         }
 
         this.setState({
+          // value: document.getElementById("editTitle").value,
+          // instructions: document.getElementById("editInstructions").value,
+          // ingredients: document.getElementById("editIngredients").value,
+          // imageLink: document.getElementById("editImage").value,
+          // sourceLink: document.getElementById("editSource").value,
           notebookRecipesArr,
           recipeSelected: true,
           addingRecipe: false,
@@ -389,7 +395,7 @@ class App extends Component {
           delete: false
         });
 
-      // console.log(notebookRecipesArr);
+      console.log(notebookRecipesArr);
 
     });
   
@@ -460,18 +466,19 @@ class App extends Component {
     });
 
     console.log(newInputValue);
+    console.log(name);
+
+    // this.setState({
+    //   value: document.getElementById("editTitle").value,
+    //   instructions: document.getElementById("editInstructions").value,
+    //   ingredients: document.getElementById("editIngredients").value,
+    //   imageLink: document.getElementById("editImage").value,
+    //   sourceLink: document.getElementById("editSource").value
+    // });
+
+    // console.log(this.state.instructions);
   }
 
-  // handleCopyPaste(event) {
-
-  //   let textareaTag = document.getElementById("editInstructions");
-  //   let att = document.createAttribute("onpaste");
-  //   att.value = "return true";
-  //   textareaTag.setAttributeNode(att);
-
-  //   console.log(att.value);
-
-  // }
 
   // event handler for createNote button click
   createNote = (event) => {

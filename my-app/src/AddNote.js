@@ -19,10 +19,10 @@ const AddNote = (props) => (
 				<input id="noteHeading" type="text" placeholder="Title of new recipe" /><br />
 
 				<label htmlFor="noteIngredients">Ingredients</label>
-				<textarea id="noteIngredients" rows="4" cols="50" placeholder="Ingredients"></textarea><br />
+				<textarea id="noteIngredients" rows="10" cols="50" placeholder="Ingredients"></textarea><br />
 				
 				<label htmlFor="noteInstructions">Instructions</label>
-				<textarea id="noteInstructions" rows="4" cols="50" placeholder="Instructions"></textarea><br />
+				<textarea id="noteInstructions" rows="10" cols="50" placeholder="Instructions"></textarea><br />
 
 				<label htmlFor="noteImage">Image (optional)</label>
 				<input id="noteImage" type="text" placeholder="URL of image" /><br />
