@@ -4,7 +4,7 @@ import './App.css';
 
 const Form = (props) => (
 
-  <div className="container mt-3">
+  <div className="container mx-auto mt-3">
     <h1 className="text-center mt-5 mb-5"> Note-It </h1>
     <form className="userLoginSignUp">
     
