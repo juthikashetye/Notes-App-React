@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Form from './Form';
 import Main from './Main';
 import Notes from './Notes';
 import AddNote from './AddNote';
 import Edit from './Edit';
-// import Nav from './Nav';
-// Import Materialize
-// import M from "materialize-css";
 
 let pass;
 let globalUserId;
@@ -61,13 +57,6 @@ class App extends Component {
 
     this.getnotes(this.state.globalUserId);
     this.getnotebookNotes(notebookId);
-
-    // let textareaTag = document.getElementById("editInstructions");
-    // let att = document.createAttribute("onpaste");
-    // att.value = "return true";
-    // textareaTag.setAttributeNode(att);
-
-    // console.log(att.value);
 
   }
 
@@ -146,7 +135,6 @@ class App extends Component {
         globalName: "",
         notebookId: 0,
         noteId: 0,
-        // noteName: "",
         instructions: "",
         ingredients: "",
         imageLink: "",
@@ -381,11 +369,6 @@ class App extends Component {
         }
 
         this.setState({
-          // value: document.getElementById("editTitle").value,
-          // instructions: document.getElementById("editInstructions").value,
-          // ingredients: document.getElementById("editIngredients").value,
-          // imageLink: document.getElementById("editImage").value,
-          // sourceLink: document.getElementById("editSource").value,
           notebookRecipesArr,
           recipeSelected: true,
           addingRecipe: false,

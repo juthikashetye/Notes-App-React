@@ -30,6 +30,3 @@ CREATE TABLE notes (
 	FOREIGN KEY (notebook_id) REFERENCES notebooks(id),
 	PRIMARY KEY (id)
 );
-
--- INSERT INTO notes (title, ingredients, instructions, image, source, notebook_id)
--- VALUES ("Schezwan noodles", "Noodles, Broth, Masala, Veg", "Cook noodles in broth with masala", "","",10);

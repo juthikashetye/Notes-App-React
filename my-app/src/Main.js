@@ -1,17 +1,15 @@
 import React from 'react';
 import './App.css';
-// Import Materialize
-// import M from "materialize-css";
 
 const Main = (props) => (
 
 			<div className="text-center">
 				<nav className="navbar navbar-light p-3">
-				<span className="navbar-brand m-auto mb-0 h1">Note-It</span>
-				<button type="button" className="mr-3 btn btn-sm btn-danger" onClick={props.logout}>Logout</button>
+					<span className="navbar-brand m-auto mb-0 h1">Note-It</span>
+					<button type="button" className="mr-3 btn btn-sm btn-danger" onClick={props.logout}>Logout</button>
 				</nav>
 				<div className="container-fluid header">
-				<div className="container mx-auto row justify-content-md-center no-gutters">
+					<div className="container mx-auto row justify-content-md-center no-gutters">
 				    
 				    	<div className="col mb-3">
 				      		<button className="btn btn-md btn-success addRecipeButton" type="button" onClick={props.addNewRecipe}>Add a new recipe</button>

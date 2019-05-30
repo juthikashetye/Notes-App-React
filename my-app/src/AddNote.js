@@ -1,17 +1,14 @@
 import React from 'react';
 import './App.css';
-// import Nav from './Nav';
-// Import Materialize
-// import M from "materialize-css";
 
 const AddNote = (props) => (
 
 			<div className="mt-0">
 				
 				<nav className="navbar navbar-light mt-0 p-3">
-				<span className="navbar-brand m-auto mb-0 h1">Note-It</span>
-				<button type="button" className="mr-3 btn btn-sm btn-success" onClick={props.myRecipes}>My Recipes</button>
-				<button type="button" className="mr-3 btn btn-sm btn-danger" onClick={props.logout}>Logout</button>
+					<span className="navbar-brand m-auto mb-0 h1">Note-It</span>
+					<button type="button" className="mr-3 btn btn-sm btn-success" onClick={props.myRecipes}>My Recipes</button>
+					<button type="button" className="mr-3 btn btn-sm btn-danger" onClick={props.logout}>Logout</button>
 				</nav>
 				<div className="container-fluid header">
 				</div>
@@ -24,28 +21,28 @@ const AddNote = (props) => (
 
 						<form className="form">
 							<div className="form-group">
-							<label htmlFor="noteHeading">Recipe Name</label>
-							<input id="noteHeading" className="form-control" type="text" placeholder="Title of new recipe" /><br />
+								<label htmlFor="noteHeading">Recipe Name</label>
+								<input id="noteHeading" className="form-control" type="text" placeholder="Title of new recipe" /><br />
 							</div>
 
 							<div className="form-group">
-							<label htmlFor="noteIngredients">Ingredients</label>
-							<textarea id="noteIngredients" className="form-control" rows="6" cols="50" placeholder="Ingredients"></textarea><br />
+								<label htmlFor="noteIngredients">Ingredients</label>
+								<textarea id="noteIngredients" className="form-control" rows="6" cols="50" placeholder="Ingredients"></textarea><br />
 							</div>
 
 							<div className="form-group">
-							<label htmlFor="noteInstructions">Instructions</label>
-							<textarea id="noteInstructions" className="form-control" rows="10" cols="50" placeholder="Instructions"></textarea><br />
+								<label htmlFor="noteInstructions">Instructions</label>
+								<textarea id="noteInstructions" className="form-control" rows="10" cols="50" placeholder="Instructions"></textarea><br />
 							</div>
 
 							<div className="form-group">
-							<label htmlFor="noteImage">Image (optional)</label>
-							<input id="noteImage" className="form-control" type="text" placeholder="URL of image" /><br />
+								<label htmlFor="noteImage">Image (optional)</label>
+								<input id="noteImage" className="form-control" type="text" placeholder="URL of image" /><br />
 							</div>
 
 							<div className="form-group">
-							<label htmlFor="noteSource">Reference Website link (optional)</label>
-							<input id="noteSource" className="form-control" type="text" placeholder="URL of website" /><br />
+								<label htmlFor="noteSource">Reference Website link (optional)</label>
+								<input id="noteSource" className="form-control" type="text" placeholder="URL of website" /><br />
 							</div>
 
 							<h5>Please fill only one of the alternatives below.</h5>

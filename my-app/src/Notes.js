@@ -1,7 +1,5 @@
 import React from 'react';
 import './App.css';
-// Import Materialize
-// import M from "materialize-css";
 
 const Notes = (props) => (
 

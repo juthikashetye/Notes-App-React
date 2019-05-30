@@ -1,23 +1,16 @@
 import React, {Component} from 'react';
 import './App.css';
-// Import Materialize
-// import M from "materialize-css";
 
 class Edit extends Component {
 
-	// constructor(this.props) {
- //    super(this.props);
-
- //  }
-
 	componentDidMount() {
 
-	let textareaTag = document.getElementById("editInstructions");
-    let att = document.createAttribute("onpaste");
-    att.value = "return true";
-    textareaTag.setAttributeNode(att);
+	// let textareaTag = document.getElementById("editInstructions");
+ //    let att = document.createAttribute("onpaste");
+ //    att.value = "return true";
+ //    textareaTag.setAttributeNode(att);
 
-    console.log(att.value);
+ //    console.log(att.value);
 
 	}
 
@@ -27,9 +20,9 @@ class Edit extends Component {
 			<div className="mt-0">
 				
 				<nav className="navbar navbar-light mt-0 p-3">
-				<span className="navbar-brand m-auto mb-0 h1">Note-It</span>
-				<button type="button" className="mr-3 btn btn-sm btn-success" onClick={this.props.myRecipes}>My Recipes</button>
-				<button type="button" className="mr-3 btn btn-sm btn-danger" onClick={this.props.logout}>Logout</button>
+					<span className="navbar-brand m-auto mb-0 h1">Note-It</span>
+					<button type="button" className="mr-3 btn btn-sm btn-success" onClick={this.props.myRecipes}>My Recipes</button>
+					<button type="button" className="mr-3 btn btn-sm btn-danger" onClick={this.props.logout}>Logout</button>
 				</nav>
 				<div className="container-fluid header">
 				</div>
