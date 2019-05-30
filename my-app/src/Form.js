@@ -4,7 +4,8 @@ import './App.css';
 
 const Form = (props) => (
 
-  <div className="container mx-auto mt-3">
+  <div className="container formDiv mt-3">
+  
     <h1 className="text-center mt-5 mb-5"> Note-It </h1>
     <form className="userLoginSignUp">
     
@@ -26,11 +27,12 @@ const Form = (props) => (
 
       <div className="form-row justify-content-center">
 
-        <button onClick={props.logInClick} className="form-group btn btn-primary btn-md col-sm-3 col-md-3 col-lg-2 m-2" id="loginButton">LOGIN</button>
-        <button onClick={props.signUpClick} className="form-group btn btn-secondary btn-md col-sm-3 col-md-3 col-lg-2 m-2" id="signupButton">SIGN-UP</button>
+        <button onClick={props.logInClick} className="form-group btn btn-success btn-md col-sm-3 col-md-3 col-lg-2 m-2" id="loginButton">LOGIN</button>
+        <button onClick={props.signUpClick} className="form-group btn btn-primary btn-md col-sm-3 col-md-3 col-lg-2 m-2" id="signupButton">SIGN-UP</button>
 
       </div>
      </form>
+
    </div>
 );
 

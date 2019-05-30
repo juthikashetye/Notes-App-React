@@ -769,7 +769,7 @@ class App extends Component {
       }else if ((this.state.delete === true) && (this.state.edit === false)){
         recipePage = 
         <div className="container mx-auto mt-5 mb-5">
-          <p className="text-center">Explore more by selecting a recipe or create something new.</p>
+          <p className="text-center message">Explore more by selecting a recipe or create something new.</p>
         </div>
       }
 
@@ -782,12 +782,12 @@ class App extends Component {
     }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === false)){
       recipePage = 
       <div className="container mx-auto mt-5 mb-5">
-        <p className="text-center">Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
+        <p className="text-center message">Welcome {this.state.globalName}! Start by selecting a recipe or create something new today.</p>
       </div>
     }else if ((this.state.recipeSelected === false) && (this.state.loggedIn === true) && (this.state.delete === true)){
       recipePage = 
       <div className="container mx-auto mt-5 mb-5">
-        <p className="text-center">Deleted recipe successfully. Explore more by selecting a recipe or create something new.</p>
+        <p className="text-center message">Deleted recipe successfully. Explore more by selecting a recipe or create something new.</p>
       </div>
     }
 

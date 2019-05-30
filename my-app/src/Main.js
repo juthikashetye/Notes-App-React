@@ -14,7 +14,7 @@ const Main = (props) => (
 				<div className="container mx-auto row justify-content-md-center no-gutters">
 				    
 				    	<div className="col mb-3">
-				      		<button className="btn btn-md btn-primary addRecipeButton" type="button" onClick={props.addNewRecipe}>Add a new recipe</button>
+				      		<button className="btn btn-md btn-success addRecipeButton" type="button" onClick={props.addNewRecipe}>Add a new recipe</button>
 				    	</div>
 
 				      	<div className="col-md-9 col-lg-9 align-start input-group mb-3">
@@ -28,7 +28,7 @@ const Main = (props) => (
 		                        			{props.notesArr.map((option,ind) => {
 		                            			if(option.notesNb_id === optionGroup.nb_id){
 
-		                                			return <option key={ind} selectednoteid={option.noteId} selectednotebookid={option.notesNb_id} value={option.n_name}> 
+		                                			return <option key={ind} className="optionTag" selectednoteid={option.noteId} selectednotebookid={option.notesNb_id} value={option.n_name}> 
 		                                        				{option.n_name}
 		                                    				</option>
 		                        				
@@ -42,7 +42,7 @@ const Main = (props) => (
 		            			)}
 		        			</select>
 		        			<div className="input-group-append">
-    							<label className="input-group-text" htmlFor="notebookNotes">Recipe books</label>
+    							<label className="input-group-text bookLabel" htmlFor="notebookNotes">Recipe books</label>
   							</div>
 				      	</div>
 				      	

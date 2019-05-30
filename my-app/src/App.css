@@ -6,8 +6,6 @@ body {
   background-color: #f1d3d5;
   background-color: rgb(255,255,240); 
   background-image: url("./images/yellowBg.jpg");
-  /*background-image: url("./images/woodPaper.jpg");*/
-  /*background-image: url("./images/mathPaper.jpg");*/
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0;
@@ -27,8 +25,31 @@ html {
   padding: 2%;
   /*background-color: rgb(255,248,220);*/
   border: 1px solid #BFBFBF;
-  background-color: white;
-  box-shadow: 10px 10px 5px #aaaaaa;
+  /*background-color: white;
+  box-shadow: 10px 10px 5px #aaaaaa;*/
+  background-color: rgba(255, 192, 203,0.9);
+  box-shadow: 9px 9px 4px rgba(0,0,0,.4);
+}
+
+.message {
+  padding: 2%;
+  border: 1px solid #BFBFBF;
+  background-color: rgba(255,245,98,0.9);
+  /*-webkit-box-shadow: 0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22);
+  box-shadow: 0 14px 28px rgba(0,0,0,.4), 0 10px 10px rgba(0,0,0,.3);*/
+  box-shadow: 9px 9px 4px rgba(0,0,0,.4);
+  font-size: 110%;
+}
+
+.formDiv{
+  width: 100%;
+  padding-bottom: 2%;
+  margin: auto;
+  border: 1px solid #BFBFBF;
+  background-color: rgba(255,245,98,0.9);
+  box-shadow: 9px 9px 4px rgba(0,0,0,.4);
+  /*-webkit-box-shadow: 0 14px 28px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.22);
+  box-shadow: 0 14px 28px rgba(0,0,0,.4), 0 10px 10px rgba(0,0,0,.3);*/
 }
 
 .recipeHeading {
@@ -45,11 +66,12 @@ html {
 }
 
 .addRecipeButton {
-  background-color: #62ACB5;
-  background-color: #53b8c0;
-  background-color: #B2B356;
-  background-color: #3b4483;
-  background-color: #6D8203;
+  /*background-color: #62ACB5;*/
+  /*background-color: #53b8c0;*/
+  /*background-color: #B2B356;*/
+  /*background-color: #3b4483;*/
+  /*background-color: #6D8203;*/
+
 }
 
 .editButton {
@@ -59,11 +81,13 @@ html {
 .recipeDetails {
   width: 80%;
   padding: 2%;
-  background-color: rgb(255,226,205);
+  /*background-color: rgb(255,226,205);
   background-color: #e3b6b5;
   background-color: #FFF0F5;
-  background-color: #f1d3d5;
-  /*background-color: rgb(255,255,240);*/
+  background-color: #f1d3d5;*/
+  background-color: rgba(255, 204, 213,0.9);
+  background-color: rgba(255,245,98,0.7);
+  box-shadow: 9px 9px 4px rgba(0,0,0,.4);
 }
 
 .recipeImage {
@@ -82,9 +106,15 @@ html {
   overflow-wrap: break-word;
 }
 
+.bookLabel {
+  background-color: #1E90FF;
+  color: #ffffff;
+}
+
 .navbar {
     background-color: #6D8203;
-    background-color: rgb(255,255,240); 
+    background-color: rgb(255,255,240);
+    background-color: rgba(255,245,98,0.9);
     min-height: 70px;
     position: fixed;
     width: 100%;
@@ -150,5 +180,28 @@ html {
     float: right; 
     width: 40%;
     margin: 2%;
+  }
+  .formDiv {
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 640px) {
+  .formDiv {
+    width: 85%;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  .formDiv {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 980px) {
+  .formDiv {
+    width: 50%;
+    margin-left: 30%;
   }
 }
