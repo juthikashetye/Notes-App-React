@@ -19,7 +19,7 @@ const Notes = (props) => (
 									<p key={`${ind}inst`} className="instructionPara"> <img key={`${ind}img`} className="recipeImage rounded-lg" src={content.imageLink} alt={content.imageTitle} /> {content.instructions} </p>
 									<a key={`${ind}link`} className="recipeLink" href={content.sourceLink}> {content.sourceLink} </a>
 									<br/>
-									<button className="btn btn-md btn-primary m-2 editButton" type="button" onClick={props.editNote}>Edit</button>
+									<button className="btn btn-md btn-success m-2 editButton" type="button" onClick={props.editNote}>Edit</button>
 			    					<button className="btn btn-md btn-danger m-2 deleteButton" type="button" onClick={props.deleteNote}>Delete</button>
 								</div>
 
