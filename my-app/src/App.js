@@ -192,25 +192,29 @@ class App extends Component {
     // console.log(event.target.value);
     
     // console.log(event.target.selectedIndex);
-
+    
     let x = document.getElementById("notebookNotes");
     let i = x.selectedIndex;
     notebookId = parseInt(x.options[i].getAttribute("selectednotebookid"));
     noteId = parseInt(x.options[i].getAttribute("selectednoteid"));
     // console.log(notebookId);
-    // console.log(noteId);
+    // console.log("in handle select change" + noteId);
 
-    this.setState({
-      recipeSelected: true,
-      addingRecipe: false,
-      value: event.target.value,
-      notebookId: notebookId,
-      notebookRecipesArr: [],
-      noteId: noteId,
-      delete: false
-    });
+    if (!((isNaN(notebookId)) || (isNaN(noteId)) || (notebookId ===0) || (noteId ===0))) {
 
-    this.getnotebookNotes(notebookId);
+      this.setState({
+        recipeSelected: true,
+        addingRecipe: false,
+        value: event.target.value,
+        notebookId: notebookId,
+        notebookRecipesArr: [],
+        noteId: noteId,
+        delete: false
+      });
+
+      this.getnotebookNotes(notebookId);
+    }
+ 
   }
 
   // event handler for notebook selection on adding new recipe page
@@ -441,6 +445,8 @@ class App extends Component {
   // event handler for edit page input
   handleInputChange(event) {
 
+    event.preventDefault();
+
     const newInputValue = event.target.value;
     const name = event.target.name;
     
@@ -448,8 +454,8 @@ class App extends Component {
       [name]: newInputValue
     });
 
-    console.log(newInputValue);
-    console.log(name);
+    // console.log(newInputValue);
+    // console.log(name);
 
     // this.setState({
     //   value: document.getElementById("editTitle").value,

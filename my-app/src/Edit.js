@@ -45,7 +45,7 @@ class Edit extends Component {
 
 							<div className="form-group">
 							<label htmlFor="editInstructions">Instructions</label>
-							<textarea id="editInstructions" className="form-control" rows="10" cols="50" name="instructions" value={this.props.instructions} onChange={this.props.handleInputChange} onInput={this.props.handleInputChange} onCopy={this.props.handleInputChange} onPaste={this.props.handleInputChange} ></textarea><br />
+							<textarea id="editInstructions" className="form-control" rows="10" cols="50" name="instructions" value={this.props.instructions} onChange={this.props.handleInputChange} ></textarea><br />
 							</div>
 
 							<div className="form-group">

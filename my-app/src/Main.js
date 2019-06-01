@@ -16,7 +16,7 @@ const Main = (props) => (
 				    	</div>
 
 				      	<div className="col-md-9 col-lg-9 align-start input-group mb-3">
-					        <select id="notebookNotes" value={props.value} selectednoteid={props.noteId} className={`${props.notebookId} custom-select custom-select-md`} onChange={props.handleSelectChange}>
+					        <select id="notebookNotes" value={props.value} selectednoteid={props.noteId} className={`${props.notebookId} custom-select custom-select-md`} onClick={props.handleSelectChange} onChange={props.handleSelectChange}>
 					        	<option disabled={true} value="">Select a recipe</option>
 
 		            			{props.notebookArr.map((optionGroup,ind) => {
