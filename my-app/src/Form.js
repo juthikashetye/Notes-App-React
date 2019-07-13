@@ -43,7 +43,7 @@ const Form = (props) => (
      </div>
 
     {/*Modal*/}
-    <div className="modal fade" id="modalScrollable" tabindex="-1" role="dialog" aria-labelledby="modalScrollableTitle" aria-hidden="true">
+    <div className="modal fade" id="modalScrollable" tabIndex="-1" role="dialog" aria-labelledby="modalScrollableTitle" aria-hidden="true">
       <div className="modal-dialog modal-dialog-scrollable" role="document">
         <div className="modal-content">
           <div className="modal-header">
