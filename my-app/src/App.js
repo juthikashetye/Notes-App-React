@@ -788,7 +788,11 @@ class App extends Component {
          {recipePage}
          {addRecipePage}
 
-      
+        <footer className="footer mt-auto py-3 text-center">
+          <div className="container">
+            <small className="footerColor text-center">Copyright &copy; 2019 <a href="https://juthikashetye.github.io/Updated-Portfolio-Page/" target="_blank" rel="noopener noreferrer" title="Visit Juthika's Portfolio">Juthika Shetye</a>. All rights reserved.</small>
+          </div>
+        </footer>
       </div>
     );
   }

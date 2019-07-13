@@ -23,6 +23,11 @@ body {
   border: 1px solid #BFBFBF;
   background-color: rgba(255,245,98,0.9);
   box-shadow: 9px 9px 4px rgba(0,0,0,.4);
+  z-index: 1;
+}
+
+.aboutModal {
+  background-color: rgba(255,245,98,0.9);
 }
 
 .navbar {
@@ -46,6 +51,14 @@ body {
     background-color: #e1e1e1;
     padding: 95px 20px;
     padding-bottom: 0px;
+}
+
+.footerColor {
+  color: #444444;
+}
+
+.footerColor a {
+  color: #666666;
 }
 
 .notesContainer {
