@@ -1,7 +1,7 @@
 # Notes-App-React
 
 ![Notes-App](my-app/src/images/notesApp.png)
-<p style="text-align: center; font-weight: bold;">Link to deployed app: [Note-It](https://projectnoteit.herokuapp.com/)</p>
+<p align="center">**Link to deployed app: [Note-It](https://projectnoteit.herokuapp.com/)**</p>
 
 * An app that lets you organize your notes by notebooks.
 * You can create, save, edit and delete notes.
